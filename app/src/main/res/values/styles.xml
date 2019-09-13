@@ -1,0 +1,62 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textAppearance">@style/TextBody</item>
+    </style>
+
+    <!-- Text -->
+    <style name="TextBody" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/darkGray</item>
+    </style>
+
+    <!-- Icons -->
+    <style name="ImageViewIcon">
+        <item name="android:padding">@dimen/icon_internal_padding</item>
+    </style>
+
+    <!-- ProgressBrar -->
+    <style name="CustomProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_bar_white</item>
+    </style>
+
+    <!-- list_item_goal -->
+    <style name="GoalListItemTitleText">
+        <item name="android:textSize">@dimen/list_item_goal_title_text_size</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="GoalListItemValueText" parent="TextBody">
+        <item name="android:textSize">@dimen/list_item_goal_value_text_size</item>
+    </style>
+
+    <!-- GoalDetailsActivity -->
+    <style name="GoalDetailsActivity" parent="AppTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+    <!-- GoalDetailsActivity - Section header info -->
+    <style name="GoalDetailsTitleText" parent="GoalListItemTitleText" />
+
+    <style name="GoalDetailsValueText">
+        <item name="android:textSize">@dimen/goal_details_value_text_size</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <!-- GoalDetailsActivity - Section header rules -->
+    <style name="GoalDetailsRulesText">
+        <item name="android:textColor">@color/lightGray</item>
+    </style>
+
+    <!-- list_item_rule -->
+    <style name="ListItemRuleText">
+        <item name="android:textSize">@dimen/list_item_rule_text_size</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+</resources>

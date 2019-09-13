@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">MyGoals</string>
+
+    <!-- Content description -->
+    <string name="content_description_bg">Background image</string>
+    <string name="content_description_back">Back</string>
+    <string name="content_description_edit">Edit</string>
+
+    <!-- list_item_goal -->
+    <string name="list_item_goal_value">$%.2f of %.2f</string>
+
+    <!-- GoalDetailsActivity -->
+    <string name="goal_details_value">$%.2f of %.2f</string>
+    <string name="goal_details_your_rules">Your \nRules</string>
+
+</resources>
