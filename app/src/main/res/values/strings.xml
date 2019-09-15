@@ -1,5 +1,7 @@
 <resources>
+    <!-- General -->
     <string name="app_name">MyGoals</string>
+    <string name="price">$%.2f</string>
 
     <!-- Content description -->
     <string name="content_description_bg">Background image</string>
@@ -12,5 +14,6 @@
     <!-- GoalDetailsActivity -->
     <string name="goal_details_value">$%.2f of %.2f</string>
     <string name="goal_details_your_rules">Your \nRules</string>
-
+    <string name="goal_details_this_week">This week •</string>
+    
 </resources>

@@ -37,7 +37,6 @@
     <style name="GoalDetailsActivity" parent="AppTheme">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:fitsSystemWindows">true</item>
     </style>
 
     <!-- GoalDetailsActivity - Section header info -->
@@ -57,6 +56,22 @@
     <style name="ListItemRuleText">
         <item name="android:textSize">@dimen/list_item_rule_text_size</item>
         <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <!-- GoalDetailsActivity - Section "This week" -->
+    <style name="ThisWeekText">
+        <item name="android:textColor">@color/lightGray2</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <!-- list_item_history -->
+    <style name="ListItemHistoryPriceText">
+        <item name="android:textColor">@color/green</item>
+    </style>
+
+    <style name="ListItemHistoryDateText">
+        <item name="android:textColor">@color/lightGray</item>
+        <item name="android:textSize">@dimen/list_item_history_date_text_size</item>
     </style>
 
 </resources>
