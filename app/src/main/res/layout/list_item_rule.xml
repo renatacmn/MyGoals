@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="@dimen/list_item_rule_size"
-    android:layout_margin="@dimen/list_item_rule_margin"
-    android:background="@drawable/shape_item_rule"
-    android:gravity="center"
-    android:minWidth="@dimen/list_item_rule_size"
-    android:orientation="vertical"
-    android:padding="@dimen/list_item_rule_padding">
+<layout>
 
-    <TextView
-        android:id="@+id/listItemRuleTextName"
-        style="@style/ListItemRuleText"
+    <data>
+
+        <variable
+            name="item"
+            type="br.com.mygoals.base.api.models.Rule" />
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="Rule" />
+        android:layout_height="@dimen/list_item_rule_size"
+        android:layout_margin="@dimen/list_item_rule_margin"
+        android:background="@drawable/shape_item_rule"
+        android:gravity="center"
+        android:minWidth="@dimen/list_item_rule_size"
+        android:orientation="vertical"
+        android:padding="@dimen/list_item_rule_padding">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/listItemRuleTextName"
+            style="@style/ListItemRuleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.type}"
+            tools:text="Rule" />
+
+    </LinearLayout>
+
+</layout>
