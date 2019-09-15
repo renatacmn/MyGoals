@@ -30,6 +30,10 @@ project.ext {
     // Dagger
     daggerVersion = "2.24"
 
+    // Rx
+    rxJavaVersion = "2.2.12"
+    rxAndroidVersion = "2.1.1"
+
     // Glide
     glideVersion = "4.9.0"
 
