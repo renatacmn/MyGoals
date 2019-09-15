@@ -39,7 +39,6 @@ dependencies {
     // Google Architecture Components
     implementation "androidx.lifecycle:lifecycle-extensions:$project.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$project.viewModelVersion"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$project.liveDataVersion"
 
     // Design
     implementation "com.google.android.material:material:$project.materialVersion"
@@ -49,6 +48,7 @@ dependencies {
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$project.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-moshi:$project.retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$project.retrofitVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$project.okHttpVersion"
 
     // Dagger
