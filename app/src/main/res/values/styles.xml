@@ -83,13 +83,13 @@
     </style>
 
     <!-- list_item_history -->
-    <style name="ListItemHistoryPriceText">
+    <style name="ListItemFeedPriceText">
         <item name="android:textColor">@color/green</item>
     </style>
 
-    <style name="ListItemHistoryDateText">
+    <style name="ListItemFeedDateText">
         <item name="android:textColor">@color/lightGray</item>
-        <item name="android:textSize">@dimen/list_item_history_date_text_size</item>
+        <item name="android:textSize">@dimen/list_item_feed_date_text_size</item>
     </style>
 
 </resources>

@@ -46,6 +46,9 @@ class GoalDetailsActivity : BaseActivity() {
             DataBindingUtil.setContentView(this, R.layout.activity_goal_details)
         binding.apply {
             goal = currentGoal
+            vm = viewModel
+            rulesAdapter = GoalDetailsRulesAdapter()
+            feedAdapter = GoalDetailsFeedAdapter()
         }
     }
 

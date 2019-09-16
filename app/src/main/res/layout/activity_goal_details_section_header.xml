@@ -8,6 +8,14 @@
             name="goal"
             type="br.com.mygoals.base.api.models.Goal" />
 
+        <variable
+            name="vm"
+            type="br.com.mygoals.goals.details.GoalDetailsViewModel" />
+
+        <variable
+            name="rulesAdapter"
+            type="br.com.mygoals.goals.details.GoalDetailsRulesAdapter" />
+
     </data>
 
     <androidx.cardview.widget.CardView
@@ -21,10 +29,13 @@
             android:orientation="vertical">
 
             <include
-                layout="@layout/activity_goal_details_section_header_info"
-                goal="@{goal}" />
+                goal="@{goal}"
+                layout="@layout/activity_goal_details_section_header_info" />
 
-            <include layout="@layout/activity_goal_details_section_header_rules" />
+            <include
+                layout="@layout/activity_goal_details_section_header_rules"
+                rulesAdapter="@{rulesAdapter}"
+                vm="@{vm}" />
 
         </LinearLayout>
 

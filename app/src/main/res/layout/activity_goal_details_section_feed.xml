@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -9,41 +8,33 @@
 
         <variable
             name="vm"
-            type="br.com.mygoals.goals.list.GoalsListViewModel" />
+            type="br.com.mygoals.goals.details.GoalDetailsViewModel" />
 
         <variable
-            name="adapter"
-            type="br.com.mygoals.goals.list.GoalsListAdapter" />
+            name="feedAdapter"
+            type="br.com.mygoals.goals.details.GoalDetailsFeedAdapter" />
 
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:background="@android:color/white">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/goalDetailsList"
+            adapter="@{feedAdapter}"
+            data="@{vm.feedViewState.feedList}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{vm.viewState.isSuccess ? View.VISIBLE : View.GONE}"
-            app:onRefreshListener="@{() -> vm.getSavingsGoals()}"
-            app:refreshing="@{vm.viewState.isLoading()}">
-
-            <androidx.recyclerview.widget.RecyclerView
-                adapter="@{adapter}"
-                data="@{vm.viewState.goalsList}"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/list_item_goal" />
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            android:visibility="@{vm.feedViewState.isSuccess ? View.VISIBLE : View.GONE}"
+            tools:listitem="@layout/list_item_feed" />
 
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="@{vm.viewState.isLoading ? View.VISIBLE : View.GONE}"
+            android:visibility="@{vm.feedViewState.isLoading ? View.VISIBLE : View.GONE}"
             tools:visibility="gone" />
 
         <LinearLayout
@@ -51,15 +42,15 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="@dimen/goals_list_margin"
-            android:visibility="@{vm.viewState.isError ? View.VISIBLE : View.GONE}"
+            android:padding="@dimen/goal_details_feed_padding"
+            android:visibility="@{vm.feedViewState.isError ? View.VISIBLE : View.GONE}"
             tools:visibility="gone">
 
             <TextView
-                errorMessage="@{vm.viewState.errorThrowable}"
+                errorMessage="@{vm.feedViewState.errorThrowable}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/goals_list_vertical_spacing"
+                android:layout_marginBottom="@dimen/goal_details_feed_vertical_spacing"
                 android:gravity="center"
                 tools:text="Error message" />
 
@@ -67,7 +58,7 @@
                 style="@style/CustomButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> vm.getSavingsGoals()}"
+                android:onClick="@{() -> vm.getFeed()}"
                 android:text="@string/try_again" />
 
         </LinearLayout>

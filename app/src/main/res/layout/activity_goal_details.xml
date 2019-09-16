@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="goal"
             type="br.com.mygoals.base.api.models.Goal" />
+
+        <variable
+            name="vm"
+            type="br.com.mygoals.goals.details.GoalDetailsViewModel" />
+
+        <variable
+            name="rulesAdapter"
+            type="br.com.mygoals.goals.details.GoalDetailsRulesAdapter" />
+
+        <variable
+            name="feedAdapter"
+            type="br.com.mygoals.goals.details.GoalDetailsFeedAdapter" />
 
     </data>
 
@@ -19,12 +32,17 @@
             android:orientation="vertical">
 
             <include
-                goal="@{goal}"
-                layout="@layout/activity_goal_details_section_header" />
+                layout="@layout/activity_goal_details_section_header"
+                app:goal="@{goal}"
+                app:rulesAdapter="@{rulesAdapter}"
+                app:vm="@{vm}" />
 
             <include layout="@layout/activity_goal_details_section_this_week" />
 
-            <include layout="@layout/activity_goal_details_section_list" />
+            <include
+                layout="@layout/activity_goal_details_section_feed"
+                app:feedAdapter="@{feedAdapter}"
+                app:vm="@{vm}" />
 
         </LinearLayout>
 
@@ -33,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/goal_details_fab_margin"
+            android:layout_margin="@dimen/goal_details_margin"
             android:src="@drawable/ic_add" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

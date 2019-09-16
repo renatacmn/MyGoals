@@ -30,10 +30,10 @@
     <dimen name="list_item_goal_value_text_size">16sp</dimen>
 
     <!-- GoalDetailsActivity -->
-    <dimen name="goal_details_fab_margin">16dp</dimen>
+    <dimen name="goal_details_margin">16dp</dimen>
 
     <!-- GoalDetailsActivity - Section header info -->
-    <dimen name="goal_details_header_info_height">300dp</dimen>
+    <dimen name="goal_details_header_info_height">260dp</dimen>
     <dimen name="goal_details_header_info_padding">16dp</dimen>
     <dimen name="goal_details_header_info_top_padding">40dp</dimen>
     <dimen name="goal_details_header_info_vertical_spacing">16dp</dimen>
@@ -53,13 +53,17 @@
     <dimen name="goal_details_this_week_padding">16dp</dimen>
     <dimen name="goal_details_this_week_horizontal_spacing">4dp</dimen>
 
-    <!-- list_item_history -->
-    <dimen name="list_item_history_horizontal_padding">16dp</dimen>
-    <dimen name="list_item_history_vertical_padding">24dp</dimen>
-    <dimen name="list_item_history_small_horizontal_spacing">4dp</dimen>
-    <dimen name="list_item_history_horizontal_spacing">16dp</dimen>
-    <dimen name="list_item_history_vertical_spacing">8dp</dimen>
-    <dimen name="list_item_history_rule_size">24dp</dimen>
-    <dimen name="list_item_history_date_text_size">12sp</dimen>
+    <!-- GoalDetailsActivity - Section Feed -->
+    <dimen name="goal_details_feed_padding">16dp</dimen>
+    <dimen name="goal_details_feed_vertical_spacing">16dp</dimen>
+
+    <!-- list_item_feed -->
+    <dimen name="list_item_feed_horizontal_padding">16dp</dimen>
+    <dimen name="list_item_feed_vertical_padding">24dp</dimen>
+    <dimen name="list_item_feed_small_horizontal_spacing">4dp</dimen>
+    <dimen name="list_item_feed_horizontal_spacing">16dp</dimen>
+    <dimen name="list_item_feed_vertical_spacing">8dp</dimen>
+    <dimen name="list_item_feed_rule_size">24dp</dimen>
+    <dimen name="list_item_feed_date_text_size">12sp</dimen>
 
 </resources>

@@ -49,3 +49,8 @@ fun loadCurrentBalance(progressBar: ProgressBar, goal: Goal?) {
         progressBar.progress = goal.currentBalance.toInt()
     }
 }
+
+@BindingAdapter("timestamp")
+fun loadFormattedDate(textView: TextView, timestamp: String) {
+
+}
