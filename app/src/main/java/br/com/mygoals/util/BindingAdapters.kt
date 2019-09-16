@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import br.com.mygoals.R
+import br.com.mygoals.base.api.models.FeedItem
 import br.com.mygoals.base.api.models.Goal
 import br.com.mygoals.base.view.DataBindingAdapter
 import com.bumptech.glide.Glide
@@ -48,11 +49,34 @@ fun loadErrorMessage(textView: TextView, error: Throwable) {
     textView.text = errorMessage
 }
 
-@BindingAdapter("goal")
+@BindingAdapter("goalProgress")
 fun loadCurrentBalance(progressBar: ProgressBar, goal: Goal?) {
     goal?.let {
         progressBar.max = goal.targetAmount?.toInt() ?: goal.currentBalance.toInt()
         progressBar.progress = goal.currentBalance.toInt()
+    }
+}
+
+@BindingAdapter("thisWeekSum")
+fun loadThisWeeksSum(textView: TextView, list: List<FeedItem>) {
+    val serverUtcDatePattern = "yyyy-MM-dd'T'HH:mm:ss.025'Z'"
+    val inputDateFormat = SimpleDateFormat(serverUtcDatePattern, Locale.UK)
+    val now = Calendar.getInstance().time
+    val context = textView.context
+    var sum = 0.0
+
+    try {
+        for (feedItem in list) {
+            val date = inputDateFormat.parse(feedItem.timestamp)
+            val diffInDays = TimeUnit.MILLISECONDS.toDays(now.time - date.time)
+            if (diffInDays <= 7) {
+                sum += feedItem.amount
+            }
+        }
+        textView.text = context.getString(R.string.price, sum)
+    } catch (e: ParseException) {
+        e.printStackTrace()
+        textView.text = context.getString(R.string.price, sum)
     }
 }
 
@@ -65,7 +89,7 @@ fun loadHtmlText(textView: TextView, htmlText: String) {
     }
 }
 
-@BindingAdapter("timestamp")
+@BindingAdapter("feedTimestamp")
 fun loadFormattedDate(textView: TextView, timestamp: String) {
     val serverUtcDatePattern = "yyyy-MM-dd'T'HH:mm:ss.025'Z'"
     val listDatePattern = "MMMM dd, yyyy - HH:mm"

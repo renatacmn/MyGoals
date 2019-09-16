@@ -18,9 +18,6 @@
     <!-- Button -->
     <dimen name="custom_button_corner_radius">24dp</dimen>
 
-    <!-- List -->
-    <dimen name="fading_edge_length">16dp</dimen>
-
     <!-- GoalsListActivity -->
     <dimen name="goals_list_margin">16dp</dimen>
     <dimen name="goals_list_vertical_spacing">16dp</dimen>

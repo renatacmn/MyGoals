@@ -37,7 +37,9 @@
                 app:rulesAdapter="@{rulesAdapter}"
                 app:vm="@{vm}" />
 
-            <include layout="@layout/activity_goal_details_section_this_week" />
+            <include
+                layout="@layout/activity_goal_details_section_this_week"
+                app:vm="@{vm}" />
 
             <include
                 layout="@layout/activity_goal_details_section_feed"

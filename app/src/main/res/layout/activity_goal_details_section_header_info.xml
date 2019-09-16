@@ -78,7 +78,7 @@
             <ProgressBar
                 android:id="@+id/goalDetailsProgressIndicator"
                 style="@style/CustomProgressBar"
-                goal="@{goal}"
+                goalProgress="@{goal}"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/custom_progress_bar_height"
                 app:layout_constraintBottom_toBottomOf="parent"

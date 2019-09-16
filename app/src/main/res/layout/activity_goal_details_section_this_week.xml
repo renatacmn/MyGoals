@@ -1,22 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="horizontal"
-    android:padding="@dimen/goal_details_this_week_padding">
+<layout xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        style="@style/ThisWeekText"
-        android:layout_width="wrap_content"
+    <data>
+
+        <variable
+            name="vm"
+            type="br.com.mygoals.goals.details.GoalDetailsViewModel" />
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/goal_details_this_week_horizontal_spacing"
-        android:text="@string/goal_details_this_week" />
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/goal_details_this_week_padding">
 
-    <TextView
-        style="@style/TextBody"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/price" />
+        <TextView
+            style="@style/ThisWeekText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/goal_details_this_week_horizontal_spacing"
+            android:text="@string/goal_details_this_week" />
 
-</LinearLayout>
+        <TextView
+            style="@style/TextBody"
+            thisWeekSum="@{vm.feedViewState.feedList}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/price" />
+
+    </LinearLayout>
+
+</layout>

@@ -47,7 +47,7 @@
         <TextView
             android:id="@+id/listItemFeedTextDate"
             style="@style/ListItemFeedDateText"
-            timestamp="@{item.timestamp}"
+            feedTimestamp="@{item.timestamp}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/list_item_feed_small_horizontal_spacing"
