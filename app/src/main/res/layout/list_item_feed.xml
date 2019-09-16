@@ -21,12 +21,12 @@
         <TextView
             android:id="@+id/listItemFeedTextTitle"
             style="@style/TextBody"
+            htmlText="@{item.message}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/list_item_feed_vertical_padding"
             android:layout_marginEnd="@dimen/list_item_feed_horizontal_spacing"
             android:layout_marginBottom="@dimen/list_item_feed_small_horizontal_spacing"
-            android:text="@{item.message}"
             app:layout_constraintBottom_toTopOf="@id/listItemFeedRule"
             app:layout_constraintEnd_toStartOf="@id/listItemFeedTextPrice"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,6 +39,7 @@
             android:layout_width="@dimen/list_item_feed_rule_size"
             android:layout_height="@dimen/list_item_feed_rule_size"
             android:layout_marginBottom="@dimen/list_item_feed_vertical_padding"
+            app:item="@{item.getRule()}"
             app:layout_constraintBottom_toTopOf="@id/listItemFeedDivider"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/listItemFeedTextTitle" />

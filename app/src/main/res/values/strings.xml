@@ -27,4 +27,9 @@
     <string name="goal_details_this_week">This week •</string>
     <string name="goal_details_fab_message">Add</string>
 
+    <!-- list_item_feed -->
+    <string name="list_item_feed_timestamp_seconds">%ds ago</string>
+    <string name="list_item_feed_timestamp_minutes">%dm ago</string>
+    <string name="list_item_feed_timestamp_hours">%dh ago</string>
+
 </resources>

@@ -27,6 +27,11 @@
             data="@{vm.feedViewState.feedList}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:fadingEdge="vertical"
+            android:fadingEdgeLength="@dimen/fading_edge_length"
+            android:paddingBottom="@dimen/goal_details_feed_bottom_padding"
+            android:requiresFadingEdge="vertical"
             android:visibility="@{vm.feedViewState.isSuccess ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/list_item_feed" />

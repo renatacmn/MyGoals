@@ -13,4 +13,10 @@ data class FeedItem(
     val amount: Float,
     @field:Json(name = "savingsRuleId")
     val savingsRuleId: Int
-)
+) {
+
+    fun getRule(): Rule {
+        return Rule(savingsRuleId, null)
+    }
+
+}
