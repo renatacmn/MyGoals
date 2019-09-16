@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.SocketTimeoutException
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -59,25 +58,18 @@ fun loadCurrentBalance(progressBar: ProgressBar, goal: Goal?) {
 
 @BindingAdapter("thisWeekSum")
 fun loadThisWeeksSum(textView: TextView, list: List<FeedItem>) {
-    val serverUtcDatePattern = "yyyy-MM-dd'T'HH:mm:ss.025'Z'"
-    val inputDateFormat = SimpleDateFormat(serverUtcDatePattern, Locale.UK)
     val now = Calendar.getInstance().time
     val context = textView.context
     var sum = 0.0
 
-    try {
-        for (feedItem in list) {
-            val date = inputDateFormat.parse(feedItem.timestamp)
-            val diffInDays = TimeUnit.MILLISECONDS.toDays(now.time - date.time)
-            if (diffInDays <= 7) {
-                sum += feedItem.amount
-            }
+    for (feedItem in list) {
+        val diffInMillis = now.time - feedItem.timestamp.time
+        val diffInDays = TimeUnit.MILLISECONDS.toDays(diffInMillis)
+        if (diffInDays <= 7) {
+            sum += feedItem.amount
         }
-        textView.text = context.getString(R.string.price, sum)
-    } catch (e: ParseException) {
-        e.printStackTrace()
-        textView.text = context.getString(R.string.price, sum)
     }
+    textView.text = context.getString(R.string.price, sum)
 }
 
 @BindingAdapter("htmlText")
@@ -90,32 +82,24 @@ fun loadHtmlText(textView: TextView, htmlText: String) {
 }
 
 @BindingAdapter("feedTimestamp")
-fun loadFormattedDate(textView: TextView, timestamp: String) {
-    val serverUtcDatePattern = "yyyy-MM-dd'T'HH:mm:ss.025'Z'"
+fun loadFormattedDate(textView: TextView, timestamp: Date) {
     val listDatePattern = "MMMM dd, yyyy - HH:mm"
-    val inputDateFormat = SimpleDateFormat(serverUtcDatePattern, Locale.UK)
     val outputDateFormat = SimpleDateFormat(listDatePattern, Locale.UK)
     val now = Calendar.getInstance().time
     val context = textView.context
 
-    try {
-        val date = inputDateFormat.parse(timestamp)
-        val diffInMillisec = now.time - date.time
-        val diffInHours = TimeUnit.MILLISECONDS.toHours(diffInMillisec)
-        val diffInMin = TimeUnit.MILLISECONDS.toMinutes(diffInMillisec)
-        val diffInSec = TimeUnit.MILLISECONDS.toSeconds(diffInMillisec)
+    val diffInMillis = now.time - timestamp.time
+    val diffInHours = TimeUnit.MILLISECONDS.toHours(diffInMillis)
+    val diffInMin = TimeUnit.MILLISECONDS.toMinutes(diffInMillis)
+    val diffInSec = TimeUnit.MILLISECONDS.toSeconds(diffInMillis)
 
-        when {
-            (diffInSec <= 60) -> textView.text =
-                context.getString(R.string.list_item_feed_timestamp_seconds, diffInSec)
-            (diffInMin <= 60) -> textView.text =
-                context.getString(R.string.list_item_feed_timestamp_minutes, diffInMin)
-            (diffInHours <= 24) -> textView.text =
-                context.getString(R.string.list_item_feed_timestamp_hours, diffInHours)
-            else -> textView.text = outputDateFormat.format(date)
-        }
-    } catch (e: ParseException) {
-        e.printStackTrace()
-        textView.text = timestamp
+    when {
+        (diffInSec <= 60) -> textView.text =
+            context.getString(R.string.list_item_feed_timestamp_seconds, diffInSec)
+        (diffInMin <= 60) -> textView.text =
+            context.getString(R.string.list_item_feed_timestamp_minutes, diffInMin)
+        (diffInHours <= 24) -> textView.text =
+            context.getString(R.string.list_item_feed_timestamp_hours, diffInHours)
+        else -> textView.text = outputDateFormat.format(timestamp)
     }
 }

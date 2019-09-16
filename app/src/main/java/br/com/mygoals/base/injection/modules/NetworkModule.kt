@@ -2,6 +2,8 @@ package br.com.mygoals.base.injection.modules
 
 import br.com.mygoals.BuildConfig
 import br.com.mygoals.base.api.MyGoalsApi
+import br.com.mygoals.util.CustomDateAdapter
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -34,12 +36,18 @@ class NetworkModule {
 
     @Provides
     @Singleton
+    fun provideMoshi(): Moshi =
+        Moshi.Builder().add(CustomDateAdapter()).build()
+
+    @Provides
+    @Singleton
     fun provideRetrofit(
-        okHttpClient: OkHttpClient
+        okHttpClient: OkHttpClient,
+        moshi: Moshi
     ): Retrofit =
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClient)
             .build()
