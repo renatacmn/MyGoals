@@ -9,7 +9,8 @@
     <string name="content_description_edit">Edit</string>
 
     <!-- GoalListActivity -->
-    <string name="goal_list_title">Goals</string>
+    <string name="goals_list_title">Goals</string>
+    <string name="goals_list_btn_try_again_label">Try again</string>
 
     <!-- list_item_goal -->
     <string name="list_item_goal_value_with_target">$%.2f of %.2f</string>

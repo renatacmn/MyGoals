@@ -26,9 +26,16 @@
         <item name="android:padding">@dimen/icon_internal_padding</item>
     </style>
 
-    <!-- ProgressBrar -->
+    <!-- ProgressBar -->
     <style name="CustomProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_bar_white</item>
+    </style>
+
+    <!-- Button -->
+    <style name="CustomButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/bg_custom_button</item>
     </style>
 
     <!-- list_item_goal -->

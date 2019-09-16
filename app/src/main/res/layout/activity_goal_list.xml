@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="br.com.mygoals.goals.list.GoalsListViewModel" />
@@ -12,6 +14,7 @@
         <variable
             name="adapter"
             type="br.com.mygoals.goals.list.GoalsListAdapter" />
+
     </data>
 
     <FrameLayout
@@ -20,13 +23,51 @@
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/goalList"
+            android:id="@+id/goalsListRecyclerView"
             adapter="@{adapter}"
             data="@{vm.viewState.goalsList}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="@{vm.viewState.isSuccess ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/list_item_goal" />
+
+        <ProgressBar
+            android:id="@+id/goalsListProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{vm.viewState.isLoading ? View.VISIBLE : View.GONE}"
+            tools:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/goalsListErrorLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/goals_list_margin"
+            android:visibility="@{vm.viewState.isError ? View.VISIBLE : View.GONE}"
+            tools:visibility="gone">
+
+            <TextView
+                android:id="@+id/goalsListErrorTextMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/goals_list_vertical_spacing"
+                android:gravity="center"
+                android:text="@{vm.viewState.errorMessage}"
+                tools:text="Error message" />
+
+            <Button
+                android:id="@+id/goalsListErrorButtonTryAgain"
+                style="@style/CustomButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> vm.getSavingsGoals()}"
+                android:text="@string/goals_list_btn_try_again_label" />
+
+        </LinearLayout>
 
     </FrameLayout>
 

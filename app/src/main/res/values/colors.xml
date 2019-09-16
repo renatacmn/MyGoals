@@ -5,13 +5,14 @@
     <color name="colorAccent">@color/lightBlue</color>
 
     <color name="lightBlue">#00abbd</color>
+    <color name="lightBluePressed">#7d00abbd</color>
+
     <color name="darkBlue">#322b6d</color>
     
     <color name="green">#5ec212</color>
 
     <color name="translucentWhite">#7dffffff</color>
 
-    <!-- Gray palette -->
     <color name="darkGray">#202020</color>
     <color name="lightGray">#a2a2a2</color>
     <color name="lightGray2">#9daaaf</color>
