@@ -19,11 +19,10 @@
     <string name="goals_list_btn_try_again_label">Try again</string>
 
     <!-- list_item_goal -->
-    <string name="list_item_goal_value_with_target">$%.2f of %.2f</string>
+    <string name="list_item_goal_value_with_target">$%.2f of $%.2f</string>
     <string name="list_item_goal_value_without_target">@string/price</string>
 
     <!-- GoalDetailsActivity -->
-    <string name="goal_details_value">$%.2f of %.2f</string>
     <string name="goal_details_your_rules">Your \nRules</string>
     <string name="goal_details_this_week">This week •</string>
 

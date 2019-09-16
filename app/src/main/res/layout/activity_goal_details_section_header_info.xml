@@ -1,73 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/goal_details_header_info_height">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/goalDetailsImage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/content_description_bg"
-        tools:background="@color/lightBlue" />
+    <data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+        <variable
+            name="goal"
+            type="br.com.mygoals.base.api.models.Goal" />
+
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/goal_details_header_info_padding">
+        android:layout_height="@dimen/goal_details_header_info_height">
 
         <ImageView
-            android:id="@+id/goalDetailsIcBack"
-            style="@style/ImageViewIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/content_description_back"
-            android:src="@drawable/ic_arrow_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/goalDetailsImage"
+            imageUrl="@{goal.goalImageURL}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/content_description_bg"
+            android:scaleType="centerCrop"
+            tools:background="@color/lightBlue" />
 
-        <ImageView
-            android:id="@+id/goalDetailsIcEdit"
-            style="@style/ImageViewIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/content_description_edit"
-            android:src="@drawable/ic_edit"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/goal_details_header_info_padding"
+            android:paddingTop="@dimen/goal_details_header_info_top_padding"
+            android:paddingEnd="@dimen/goal_details_header_info_padding"
+            android:paddingBottom="@dimen/goal_details_header_info_padding">
 
-        <TextView
-            android:id="@+id/goalDetailsTextName"
-            style="@style/GoalDetailsTitleText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/goalDetailsTextValue"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Goal name" />
+            <ImageView
+                android:id="@+id/goalDetailsIcBack"
+                style="@style/ImageViewIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/content_description_back"
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/goalDetailsTextValue"
-            style="@style/GoalDetailsValueText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/goal_details_header_info_vertical_spacing"
-            android:text="@string/goal_details_value"
-            app:layout_constraintBottom_toTopOf="@id/goalDetailsProgressIndicator"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <ImageView
+                android:id="@+id/goalDetailsIcEdit"
+                style="@style/ImageViewIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/content_description_edit"
+                android:src="@drawable/ic_edit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ProgressBar
-            android:id="@+id/goalDetailsProgressIndicator"
-            style="@style/CustomProgressBar"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/custom_progress_bar_height"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:progress="50" />
+            <TextView
+                android:id="@+id/goalDetailsTextName"
+                style="@style/GoalDetailsTitleText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{goal.name}"
+                app:layout_constraintBottom_toTopOf="@id/goalDetailsTextValue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Goal name" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/goalDetailsTextValue"
+                style="@style/GoalDetailsValueText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/goal_details_header_info_vertical_spacing"
+                android:text="@{goal.getValueText(context)}"
+                app:layout_constraintBottom_toTopOf="@id/goalDetailsProgressIndicator"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-</FrameLayout>
+            <ProgressBar
+                android:id="@+id/goalDetailsProgressIndicator"
+                style="@style/CustomProgressBar"
+                goal="@{goal}"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/custom_progress_bar_height"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:progress="50" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+
+</layout>

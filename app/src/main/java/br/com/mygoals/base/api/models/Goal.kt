@@ -1,9 +1,12 @@
 package br.com.mygoals.base.api.models
 
 import android.content.Context
+import android.os.Parcelable
 import br.com.mygoals.R
 import com.squareup.moshi.Json
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Goal(
     @field:Json(name = "id")
     val id: Int,
@@ -15,7 +18,7 @@ data class Goal(
     val currentBalance: Float,
     @field:Json(name = "targetAmount")
     val targetAmount: Float?
-) {
+) : Parcelable {
 
     fun getValueText(context: Context): String {
         return if (targetAmount == null) {

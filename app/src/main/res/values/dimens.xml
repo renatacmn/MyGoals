@@ -35,6 +35,7 @@
     <!-- GoalDetailsActivity - Section header info -->
     <dimen name="goal_details_header_info_height">300dp</dimen>
     <dimen name="goal_details_header_info_padding">16dp</dimen>
+    <dimen name="goal_details_header_info_top_padding">40dp</dimen>
     <dimen name="goal_details_header_info_vertical_spacing">16dp</dimen>
     <dimen name="goal_details_value_text_size">24sp</dimen>
 

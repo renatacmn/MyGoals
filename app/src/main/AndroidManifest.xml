@@ -26,7 +26,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".goals.details.GoalDetailsActivity" />
+        <activity android:name=".goals.details.GoalDetailsActivity"
+            android:theme="@style/GoalDetailsActivity"/>
 
     </application>
 
