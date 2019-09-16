@@ -26,14 +26,16 @@ class GoalDetailsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getExtras()
+        getExtrasAndInitViewModel()
         initializeBinding()
+        loadData()
     }
 
     // Private methods
 
-    private fun getExtras() {
+    private fun getExtrasAndInitViewModel() {
         currentGoal = intent.extras?.getParcelable(PARAM_GOAL)
+        viewModel.init(currentGoal)
     }
 
     private fun initializeBinding() {
@@ -42,6 +44,11 @@ class GoalDetailsActivity : BaseActivity() {
         binding.apply {
             goal = currentGoal
         }
+    }
+
+    private fun loadData() {
+        viewModel.getRules()
+        viewModel.getFeed()
     }
 
     companion object {

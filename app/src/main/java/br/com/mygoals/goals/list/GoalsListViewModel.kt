@@ -23,44 +23,18 @@ class GoalsListViewModel(
     private val executors: Executors
 ) : AutoDisposableViewModel() {
 
-    var viewState = GoalsListViewState()
+    val viewState = GoalsListViewState()
 
     fun getSavingsGoals() {
         add(repository.getSavingsGoals()
             .subscribeOn(executors.networkIO())
-            .doOnSubscribe { updateToLoadingViewState() }
+            .doOnSubscribe { viewState.onLoading() }
             .observeOn(executors.mainThread())
-            .subscribe(this::updateToSuccessViewState) { error -> updateToErrorViewState(error) })
+            .subscribe(this::onSuccess) { error -> viewState.onError(error) })
     }
 
-    private fun updateToLoadingViewState() {
-        viewState.apply {
-            isLoading.set(true)
-            isSuccess.set(false)
-            isError.set(false)
-            goalsList.set(emptyList())
-            errorThrowable.set(Exception())
-        }
-    }
-
-    private fun updateToSuccessViewState(data: SavingsGoals) {
-        viewState.apply {
-            isLoading.set(false)
-            isSuccess.set(true)
-            isError.set(false)
-            goalsList.set(data.savingsGoals ?: emptyList())
-            errorThrowable.set(Exception())
-        }
-    }
-
-    private fun updateToErrorViewState(error: Throwable) {
-        viewState.apply {
-            isLoading.set(false)
-            isSuccess.set(false)
-            isError.set(true)
-            goalsList.set(emptyList())
-            errorThrowable.set(error)
-        }
+    private fun onSuccess(data: SavingsGoals) {
+        viewState.onSuccess(data.savingsGoals ?: emptyList())
     }
 
 }
