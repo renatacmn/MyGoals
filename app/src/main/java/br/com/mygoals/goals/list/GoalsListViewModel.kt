@@ -39,7 +39,7 @@ class GoalsListViewModel(
             isSuccess.set(false)
             isError.set(false)
             goalsList.set(emptyList())
-            errorMessage.set("")
+            errorThrowable.set(Exception())
         }
     }
 
@@ -49,7 +49,7 @@ class GoalsListViewModel(
             isSuccess.set(true)
             isError.set(false)
             goalsList.set(data.savingsGoals ?: emptyList())
-            errorMessage.set("")
+            errorThrowable.set(Exception())
         }
     }
 
@@ -59,7 +59,7 @@ class GoalsListViewModel(
             isSuccess.set(false)
             isError.set(true)
             goalsList.set(emptyList())
-            errorMessage.set(error.message)
+            errorThrowable.set(error)
         }
     }
 

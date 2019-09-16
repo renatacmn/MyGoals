@@ -8,6 +8,12 @@
     <string name="content_description_back">Back</string>
     <string name="content_description_edit">Edit</string>
 
+    <!-- Errors -->
+    <string name="error_io_exception">It seems like your device is offline. Please check your internet connection.</string>
+    <string name="error_http_exception">An error occurred while communicating with the server.</string>
+    <string name="error_timeout_exception">The server is taking too long to respond. Please, try again.</string>
+    <string name="error_unknown">Oops! Something went wrong.</string>
+
     <!-- GoalListActivity -->
     <string name="goals_list_title">Goals</string>
     <string name="goals_list_btn_try_again_label">Try again</string>

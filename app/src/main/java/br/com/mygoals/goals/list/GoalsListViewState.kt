@@ -8,5 +8,5 @@ data class GoalsListViewState(
     var isSuccess: ObservableField<Boolean> = ObservableField(false),
     var isError: ObservableField<Boolean> = ObservableField(false),
     var goalsList: ObservableField<List<Goal>> = ObservableField(emptyList()),
-    var errorMessage: ObservableField<String?> = ObservableField("")
+    var errorThrowable: ObservableField<Throwable> = ObservableField(Exception())
 )
