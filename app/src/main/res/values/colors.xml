@@ -12,6 +12,7 @@
     <color name="green">#5ec212</color>
 
     <color name="translucentWhite">#7dffffff</color>
+    <color name="translucentBlack">#7d000000</color>
 
     <color name="darkGray">#202020</color>
     <color name="lightGray">#a2a2a2</color>

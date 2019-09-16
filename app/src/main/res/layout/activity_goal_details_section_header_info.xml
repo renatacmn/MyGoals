@@ -27,6 +27,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/gradient_goal_image"
             android:paddingStart="@dimen/goal_details_header_info_padding"
             android:paddingTop="@dimen/goal_details_header_info_top_padding"
             android:paddingEnd="@dimen/goal_details_header_info_padding"
