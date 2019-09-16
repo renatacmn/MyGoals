@@ -54,30 +54,15 @@
                 android:visibility="@{vm.rulesViewState.isLoading ? View.VISIBLE : View.GONE}"
                 tools:visibility="gone" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="horizontal"
+            <Button
+                style="@style/CustomButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:onClick="@{() -> vm.getRules()}"
+                android:text="@string/try_again"
                 android:visibility="@{vm.rulesViewState.isError ? View.VISIBLE : View.GONE}"
-                tools:visibility="visible">
-
-                <TextView
-                    errorMessage="@{vm.rulesViewState.errorThrowable}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/goal_details_rules_horizontal_spacing"
-                    android:gravity="center"
-                    tools:text="Error message" />
-
-                <Button
-                    style="@style/CustomButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{() -> vm.getRules()}"
-                    android:text="@string/try_again" />
-
-            </LinearLayout>
+                tools:visibility="gone" />
 
         </FrameLayout>
 

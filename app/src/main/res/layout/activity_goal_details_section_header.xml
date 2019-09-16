@@ -29,13 +29,13 @@
             android:orientation="vertical">
 
             <include
-                goal="@{goal}"
-                layout="@layout/activity_goal_details_section_header_info" />
+                layout="@layout/activity_goal_details_section_header_info"
+                app:goal="@{goal}" />
 
             <include
                 layout="@layout/activity_goal_details_section_header_rules"
-                rulesAdapter="@{rulesAdapter}"
-                vm="@{vm}" />
+                app:rulesAdapter="@{rulesAdapter}"
+                app:vm="@{vm}" />
 
         </LinearLayout>
 
