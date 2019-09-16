@@ -22,15 +22,24 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/goalsListRecyclerView"
-            adapter="@{adapter}"
-            data="@{vm.viewState.goalsList}"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/goalsListSwipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{vm.viewState.isSuccess ? View.VISIBLE : View.GONE}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/list_item_goal" />
+            app:onRefreshListener="@{() -> vm.getSavingsGoals()}"
+            app:refreshing="@{vm.viewState.isLoading()}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/goalsListRecyclerView"
+                adapter="@{adapter}"
+                data="@{vm.viewState.goalsList}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/list_item_goal" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <ProgressBar
             android:id="@+id/goalsListProgressBar"
