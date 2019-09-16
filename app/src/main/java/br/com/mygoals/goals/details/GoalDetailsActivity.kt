@@ -9,6 +9,8 @@ import br.com.mygoals.R
 import br.com.mygoals.base.BaseActivity
 import br.com.mygoals.base.api.models.Goal
 import br.com.mygoals.databinding.ActivityGoalDetailsBinding
+import kotlinx.android.synthetic.main.activity_goal_details.*
+import kotlinx.android.synthetic.main.activity_goal_details_section_header_info.*
 import javax.inject.Inject
 
 class GoalDetailsActivity : BaseActivity() {
@@ -28,6 +30,7 @@ class GoalDetailsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         getExtrasAndInitViewModel()
         initializeBinding()
+        initializeViewComponents()
         loadData()
     }
 
@@ -44,6 +47,12 @@ class GoalDetailsActivity : BaseActivity() {
         binding.apply {
             goal = currentGoal
         }
+    }
+
+    private fun initializeViewComponents() {
+        goalDetailsIcBack.setOnClickListener { onBackPressed() }
+        goalDetailsIcEdit.setOnClickListener { showToast(getString(R.string.content_description_edit)) }
+        goalDetailsFabAdd.setOnClickListener { showToast(getString(R.string.goal_details_fab_message)) }
     }
 
     private fun loadData() {

@@ -25,5 +25,6 @@
     <!-- GoalDetailsActivity -->
     <string name="goal_details_your_rules">Your \nRules</string>
     <string name="goal_details_this_week">This week •</string>
+    <string name="goal_details_fab_message">Add</string>
 
 </resources>
