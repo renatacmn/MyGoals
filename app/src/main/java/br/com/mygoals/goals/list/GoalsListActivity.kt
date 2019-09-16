@@ -21,12 +21,22 @@ class GoalsListActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initializeBinding()
+        loadData()
+    }
+
+    // Private methods
+
+    private fun initializeBinding() {
         val binding: ActivityGoalListBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_goal_list)
         binding.apply {
             vm = viewModel
             adapter = GoalsListAdapter()
         }
+    }
+
+    private fun loadData() {
         viewModel.getSavingsGoals()
     }
 

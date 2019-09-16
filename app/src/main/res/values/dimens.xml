@@ -5,8 +5,8 @@
     <dimen name="divider_height">1dp</dimen>
 
     <!-- Card -->
-    <dimen name="custom_card_corner_radius">8dp</dimen>
-    <dimen name="custom_card_elevation">4dp</dimen>
+    <dimen name="custom_card_corner_radius">4dp</dimen>
+    <dimen name="custom_card_elevation">2dp</dimen>
 
     <!-- Icons -->
     <dimen name="icon_internal_padding">8dp</dimen>
@@ -19,7 +19,7 @@
     <dimen name="list_item_goal_height">260dp</dimen>
     <dimen name="list_item_goal_margin">8dp</dimen>
     <dimen name="list_item_goal_padding">16dp</dimen>
-    <dimen name="list_item_goal_title_text_size">30sp</dimen>
+    <dimen name="list_item_goal_title_text_size">26sp</dimen>
     <dimen name="list_item_goal_value_text_size">16sp</dimen>
 
     <!-- GoalDetailsActivity -->
@@ -44,7 +44,7 @@
     <!-- GoalDetailsActivity - Section "This week" -->
     <dimen name="goal_details_this_week_padding">16dp</dimen>
     <dimen name="goal_details_this_week_horizontal_spacing">4dp</dimen>
-    
+
     <!-- list_item_history -->
     <dimen name="list_item_history_horizontal_padding">16dp</dimen>
     <dimen name="list_item_history_vertical_padding">24dp</dimen>

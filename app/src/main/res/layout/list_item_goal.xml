@@ -24,9 +24,11 @@
 
             <ImageView
                 android:id="@+id/listItemGoalImage"
+                imageUrl="@{item.goalImageURL}"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:contentDescription="@string/content_description_bg"
+                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toTopOf="@id/listItemGoalTextValue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +53,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/list_item_goal_padding"
-                android:text="@string/list_item_goal_value"
+                android:text="@{item.getValueText(context)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

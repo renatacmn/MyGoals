@@ -16,7 +16,8 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
 
-        <activity android:name=".goals.list.GoalsListActivity">
+        <activity android:name=".goals.list.GoalsListActivity"
+            android:label="@string/goal_list_title">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

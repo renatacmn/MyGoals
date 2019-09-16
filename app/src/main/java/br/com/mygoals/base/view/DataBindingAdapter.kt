@@ -25,7 +25,7 @@ abstract class DataBindingAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>) :
 
 }
 
-class DataBindingViewHolder<T>(private val binding: ViewDataBinding) :
+open class DataBindingViewHolder<T>(private val binding: ViewDataBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: T) {
