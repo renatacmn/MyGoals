@@ -31,7 +31,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/goalList"
             adapter="@{adapter}"
-            data="@{vm.state.goalsList}"
+            data="@{vm.viewState.goalsList}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

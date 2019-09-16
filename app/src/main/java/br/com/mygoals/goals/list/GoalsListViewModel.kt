@@ -6,7 +6,6 @@ import br.com.mygoals.base.AutoDisposableViewModel
 import br.com.mygoals.base.api.MyGoalsRepository
 import br.com.mygoals.base.api.models.SavingsGoals
 import br.com.mygoals.util.executors.Executors
-import io.reactivex.subjects.BehaviorSubject
 import javax.inject.Inject
 
 
@@ -25,15 +24,14 @@ class GoalsListViewModel(
     private val executors: Executors
 ) : AutoDisposableViewModel() {
 
-    private val _state: BehaviorSubject<GoalsListViewState> = BehaviorSubject.create()
-    var state = GoalsListViewState()
+    var viewState = GoalsListViewState()
 
     fun getSavingsGoals() {
         add(repository.getSavingsGoals()
             .subscribeOn(executors.networkIO())
-            .doOnSubscribe { state = getLoadingViewState() }
-            .doOnSuccess { data -> state = getSuccessViewState(data) }
-            .doOnError { error -> state = getErrorViewState(error) }
+            .doOnSubscribe { updateToLoadingViewState() }
+            .doOnSuccess { data -> updateToSuccessViewState(data) }
+            .doOnError { error -> updateToErrorViewState(error) }
             .observeOn(executors.mainThread())
             .subscribe(this::onSuccess) { e -> onError(e) })
     }
@@ -43,37 +41,31 @@ class GoalsListViewModel(
     }
 
     private fun onError(error: Throwable) {
-        _state.onNext(getErrorViewState(error))
+        updateToErrorViewState(error)
     }
 
-    private fun getLoadingViewState(): GoalsListViewState {
-        return GoalsListViewState(
-            isLoading = true,
-            isSuccess = false,
-            isError = false,
-            goalsList = emptyList(),
-            errorMessage = null
-        )
+    private fun updateToLoadingViewState() {
+        viewState.isLoading.set(true)
+        viewState.isSuccess.set(false)
+        viewState.isError.set(false)
+        viewState.goalsList.set(emptyList())
+        viewState.errorMessage.set("")
     }
 
-    private fun getSuccessViewState(data: SavingsGoals): GoalsListViewState {
-        return GoalsListViewState(
-            isLoading = false,
-            isSuccess = true,
-            isError = false,
-            goalsList = data.savingsGoals ?: emptyList(),
-            errorMessage = null
-        )
+    private fun updateToSuccessViewState(data: SavingsGoals) {
+        viewState.isLoading.set(false)
+        viewState.isSuccess.set(true)
+        viewState.isError.set(false)
+        viewState.goalsList.set(data.savingsGoals ?: emptyList())
+        viewState.errorMessage.set("")
     }
 
-    private fun getErrorViewState(error: Throwable): GoalsListViewState {
-        return GoalsListViewState(
-            isLoading = false,
-            isSuccess = false,
-            isError = true,
-            goalsList = emptyList(),
-            errorMessage = error.localizedMessage
-        )
+    private fun updateToErrorViewState(error: Throwable) {
+        viewState.isLoading.set(false)
+        viewState.isSuccess.set(false)
+        viewState.isError.set(true)
+        viewState.goalsList.set(emptyList())
+        viewState.errorMessage.set(error.message)
     }
 
 }
