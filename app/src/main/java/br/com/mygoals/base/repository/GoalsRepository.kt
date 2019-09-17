@@ -1,6 +1,6 @@
 package br.com.mygoals.base.repository
 
-import br.com.mygoals.base.BaseRepository
+import br.com.mygoals.base.BaseRepository2
 import br.com.mygoals.base.repository.api.MyGoalsApi
 import br.com.mygoals.base.repository.api.mappers.toDomainModel
 import br.com.mygoals.base.repository.api.models.SavingsGoalsApiModel
@@ -19,8 +19,8 @@ class GoalsRepository @Inject constructor(
     private val api: MyGoalsApi,
     private val goalDao: GoalDao,
     private val repositoryUtil: RepositoryUtil,
-    private val executors: Executors
-) : BaseRepository() {
+    executors: Executors
+) : BaseRepository2(executors) {
 
     private lateinit var listener: Listener
 
@@ -29,86 +29,38 @@ class GoalsRepository @Inject constructor(
         loadFromDbRefreshingIfNecessary()
     }
 
-    // Private methods
-
-    private fun loadFromDbRefreshingIfNecessary() {
-        Timber.d("Check if exists")
-        add(
+    override fun loadFromDbRefreshingIfNecessary() {
+        super.loadFromDbRefreshingIfNecessary(
             goalDao.hasGoals(repositoryUtil.getMaxRefreshTime())
-                .subscribeOn(executors.diskIO())
-                .subscribe(
-                    (this::onCheckIfExistsSuccess),
-                    (this::onCheckIfExistsError)
-                )
         )
     }
 
-    private fun onCheckIfExistsSuccess(goalEntity: GoalEntity?) {
-        val exists = goalEntity != null
-        if (!exists) {
-            Timber.d("> Doesn't exist. Will load from API")
-            loadFromApi()
-        } else {
-            Timber.d("> Exists. Will load from DB")
-            loadFromDb()
-        }
+    override fun loadFromApi() {
+        super.loadFromApi(api.getSavingsGoals())
     }
 
-    private fun onCheckIfExistsError(error: Throwable) {
-        Timber.d("> Error while checking if exists. Will load from API\n>>${error.message}")
-        error.printStackTrace()
-        loadFromApi()
-    }
-
-    private fun loadFromApi() {
-        Timber.d("Load from API")
-        add(
-            api.getSavingsGoals()
-                .subscribeOn(executors.networkIO())
-                .observeOn(executors.diskIO())
-                .subscribe(
-                    (this::onLoadFromApiSuccess),
-                    (this::onLoadFromApiError)
-                )
-        )
-    }
-
-    private fun onLoadFromApiSuccess(data: SavingsGoalsApiModel) {
+    override fun <T> onLoadFromApiSuccess(data: T) {
         Timber.d("> Loaded successfully from API. Will save on DB")
-        data.toDomainModel()?.savingsGoals?.let { goals ->
+        val savingsGoalsApiModel = data as SavingsGoalsApiModel
+        savingsGoalsApiModel.toDomainModel()?.savingsGoals?.let { goals ->
             goals.map { it.lastRefresh = Date() }
             goalDao.saveGoals(goals.mapNotNull { it.toEntity() })
         }
         loadFromDb()
     }
 
-    private fun onLoadFromApiError(error: Throwable) {
-        Timber.d("> Error loading from API. Will show error state")
-        error.printStackTrace()
-        listener.onGoalsError(error)
+    override fun loadFromDb() {
+        super.loadFromDb(goalDao.loadGoals())
     }
 
-    private fun loadFromDb() {
-        Timber.d("Load from DB")
-        add(
-            goalDao.loadGoals()
-                .subscribeOn(executors.diskIO())
-                .observeOn(executors.mainThread())
-                .subscribe(
-                    (this::onLoadFromDbSuccess),
-                    (this::onLoadFromDbError)
-                )
-        )
-    }
-
-    private fun onLoadFromDbSuccess(goals: List<GoalEntity>) {
+    override fun <T> onLoadFromDbSuccess(data: T) {
         Timber.d("> Loaded successfully from DB. Will send to view")
+        val goals = data as List<GoalEntity>
         val savingsGoals = SavingsGoals(goals.mapNotNull { it.toDomainModel() })
         listener.onGoalsSuccess(savingsGoals)
     }
 
-    private fun onLoadFromDbError(error: Throwable) {
-        Timber.d("> Error loading from DB. Will show error state\n>>${error.message}")
+    override fun emitError(error: Throwable) {
         listener.onGoalsError(error)
     }
 

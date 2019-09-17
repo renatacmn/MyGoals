@@ -80,7 +80,7 @@ class FeedRepository @Inject constructor(
     private fun onLoadFromApiSuccess(data: FeedApiModel) {
         Timber.d("> Loaded successfully from API. Will save on DB")
         data.toDomainModel()?.feed?.let { feedItems ->
-            feedItemDao.saveFeedItems(feedItems.mapNotNull {
+            feedItemDao.saveFeedItems(goalId, feedItems.mapNotNull {
                 it.toEntity(Date(), goalId)
             })
         }
