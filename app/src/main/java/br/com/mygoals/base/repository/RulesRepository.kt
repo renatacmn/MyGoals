@@ -36,6 +36,7 @@ class RulesRepository @Inject constructor(
         add(
             ruleDao.hasRules(repositoryUtil.getMaxRefreshTime())
                 .subscribeOn(executors.diskIO())
+                .observeOn(executors.diskIO())
                 .subscribe(
                     (this::onCheckIfExistsSuccess),
                     (this::onCheckIfExistsError)

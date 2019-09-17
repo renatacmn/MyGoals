@@ -47,4 +47,9 @@ project.ext {
     jUnitVersion = "4.12"
     testRunnerVersion = "1.2.0"
     espressoCoreVersion = "3.2.0"
+    coreTestingVersion = "2.1.0"
+
+    // Mockito
+    mockitoInlineVersion = "2.8.47"
+    mockitoKotlinVersion = "2.1.0"
 }

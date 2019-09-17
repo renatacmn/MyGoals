@@ -22,6 +22,9 @@ android {
     dataBinding {
         enabled = true
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -81,6 +84,9 @@ dependencies {
     // Tests
     testImplementation "junit:junit:$project.jUnitVersion"
     testImplementation "androidx.room:room-testing:$project.roomVersion"
+    testImplementation "androidx.arch.core:core-testing:$project.coreTestingVersion"
+    testImplementation "org.mockito:mockito-inline:$project.mockitoInlineVersion"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$project.mockitoKotlinVersion"
 
     androidTestImplementation "androidx.test:runner:$project.testRunnerVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$project.espressoCoreVersion"
