@@ -1,21 +1,9 @@
 package br.com.mygoals.base
 
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import java.util.Calendar
 import java.util.Date
 
 abstract class BaseRepository {
-
-    private val compositeDisposable = CompositeDisposable()
-
-    fun dispose() {
-        compositeDisposable.dispose()
-    }
-
-    protected fun add(disposable: Disposable) {
-        compositeDisposable.add(disposable)
-    }
 
     protected fun getMaxRefreshTime(): Date {
         val calendar = Calendar.getInstance()
