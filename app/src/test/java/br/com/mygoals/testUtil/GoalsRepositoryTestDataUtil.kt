@@ -14,12 +14,12 @@ class GoalsRepositoryTestDataUtil {
         return SavingsGoalsApiModel(goalApiModelList())
     }
 
-    fun getSavingsGoals(): SavingsGoals? {
+    fun savingsGoals(): SavingsGoals? {
         return savingsGoalsApiModel().toDomainModel()
     }
 
-    fun getGoalEntity(id: Int = 1): GoalEntity? {
-        return getGoal(id).toEntity(null)
+    fun goalEntity(id: Int = 1): GoalEntity? {
+        return goal(id).toEntity(null)
     }
 
     // Private methods
@@ -38,7 +38,7 @@ class GoalsRepositoryTestDataUtil {
         )
     }
 
-    private fun getGoal(id: Int): Goal? {
+    private fun goal(id: Int): Goal? {
         return goalApiModel(id).toDomainModel()
     }
 

@@ -35,7 +35,7 @@ class GoalsRepositoryTest : BaseRepositoryTest() {
     @Test
     fun getSavingsGoals_ifHasGoalsSaved_shouldLoadFromDatabase() {
         whenever(goalDao.hasGoals(any()))
-            .thenReturn(Single.just(testDataUtil.getGoalEntity()))
+            .thenReturn(Single.just(testDataUtil.goalEntity()))
 
         val result = goalsRepository.getSavingsGoals().test()
         result.awaitTerminalEvent()
@@ -46,7 +46,7 @@ class GoalsRepositoryTest : BaseRepositoryTest() {
     @Test
     fun getSavingsGoals_ifHasGoalsSaved_shouldNotCallApi() {
         whenever(goalDao.hasGoals(any()))
-            .thenReturn(Single.just(testDataUtil.getGoalEntity()))
+            .thenReturn(Single.just(testDataUtil.goalEntity()))
 
         goalsRepository.getSavingsGoals()
         verifyZeroInteractions(api)

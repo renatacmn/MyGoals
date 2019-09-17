@@ -36,7 +36,7 @@ class GoalsListViewModelTest {
     @Test
     fun getSavingsGoals_onCall_shouldShowLoadingAndFetchData() {
         whenever(repository.getSavingsGoals())
-            .thenReturn(Single.just(testDataUtil.getSavingsGoals()))
+            .thenReturn(Single.just(testDataUtil.savingsGoals()))
 
         viewModel.getSavingsGoals()
         assertTrue(viewModel.viewState.isLoading.get() == true)
