@@ -2,7 +2,7 @@ package br.com.mygoals.base.repository.api
 
 import br.com.mygoals.base.repository.api.models.FeedApiModel
 import br.com.mygoals.base.repository.api.models.SavingsGoalsApiModel
-import br.com.mygoals.base.repository.models.SavingsRules
+import br.com.mygoals.base.repository.api.models.SavingsRulesApiModel
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -13,7 +13,7 @@ interface MyGoalsApi {
     fun getSavingsGoals(): Single<SavingsGoalsApiModel>
 
     @GET("savingsrules")
-    fun getSavingsRules(): Single<SavingsRules>
+    fun getSavingsRules(): Single<SavingsRulesApiModel>
 
     @GET("savingsgoals/{id}/feed")
     fun getFeed(

@@ -2,31 +2,27 @@ package br.com.mygoals.goals.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import br.com.mygoals.base.AutoDisposableViewModel
 import br.com.mygoals.base.repository.FeedRepository
 import br.com.mygoals.base.repository.RulesRepository
 import br.com.mygoals.base.repository.models.Feed
 import br.com.mygoals.base.repository.models.Goal
 import br.com.mygoals.base.repository.models.SavingsRules
-import br.com.mygoals.util.executors.Executors
 import javax.inject.Inject
 
 class GoalDetailsViewModelFactory @Inject constructor(
     private val rulesRepository: RulesRepository,
-    private val feedRepository: FeedRepository,
-    private val executors: Executors
+    private val feedRepository: FeedRepository
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return GoalDetailsViewModel(rulesRepository, feedRepository, executors) as T
+        return GoalDetailsViewModel(rulesRepository, feedRepository) as T
     }
 }
 
 class GoalDetailsViewModel(
     private val rulesRepository: RulesRepository,
-    private val feedRepository: FeedRepository,
-    private val executors: Executors
-) : AutoDisposableViewModel(), FeedRepository.Listener {
+    private val feedRepository: FeedRepository
+) : ViewModel(), FeedRepository.Listener, RulesRepository.Listener {
 
     val rulesViewState = GoalDetailsRulesViewState()
     val feedViewState = GoalDetailsFeedViewState()
@@ -38,13 +34,8 @@ class GoalDetailsViewModel(
     }
 
     fun getRules() {
-        add(rulesRepository.getSavingsRules()
-            .subscribeOn(executors.networkIO())
-            .doOnSubscribe { rulesViewState.onLoading() }
-            .observeOn(executors.mainThread())
-            .subscribe(this::onRulesSuccess) { error ->
-                rulesViewState.onError(error)
-            })
+        rulesViewState.onLoading()
+        rulesRepository.getSavingsRules(this)
     }
 
     fun getFeed() {
@@ -66,8 +57,12 @@ class GoalDetailsViewModel(
 
     // RulesRepository.Listener overrides
 
-    private fun onRulesSuccess(data: SavingsRules) {
-        rulesViewState.onSuccess(data.savingsRules ?: emptyList())
+    override fun onRulesSuccess(savingsRules: SavingsRules) {
+        rulesViewState.onSuccess(savingsRules.savingsRules ?: emptyList())
+    }
+
+    override fun onRulesError(throwable: Throwable) {
+        rulesViewState.onError(throwable)
     }
 
     // ViewModel overrides
@@ -75,6 +70,7 @@ class GoalDetailsViewModel(
     override fun onCleared() {
         super.onCleared()
         feedRepository.dispose()
+        rulesRepository.dispose()
     }
 
 }
