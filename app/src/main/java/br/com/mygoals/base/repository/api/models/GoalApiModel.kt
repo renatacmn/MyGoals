@@ -2,7 +2,7 @@ package br.com.mygoals.base.repository.api.models
 
 import com.squareup.moshi.Json
 
-data class GoalResponse(
+data class GoalApiModel(
     @field:Json(name = "id")
     val id: Int,
     @field:Json(name = "name")

@@ -1,8 +1,8 @@
-package br.com.mygoals.base.repository.models
+package br.com.mygoals.base.repository.api.models
 
 import com.squareup.moshi.Json
 
-data class SavingsGoals(
+data class SavingsGoalsApiModel(
     @field:Json(name = "savingsGoals")
-    val savingsGoals: List<Goal>?
+    val savingsGoals: List<GoalApiModel>?
 )

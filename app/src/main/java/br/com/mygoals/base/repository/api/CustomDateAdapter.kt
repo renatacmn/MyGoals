@@ -1,4 +1,4 @@
-package br.com.mygoals.util
+package br.com.mygoals.base.repository.api
 
 import com.squareup.moshi.*
 import java.text.SimpleDateFormat

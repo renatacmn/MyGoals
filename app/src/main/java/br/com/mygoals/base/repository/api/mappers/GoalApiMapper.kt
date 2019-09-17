@@ -3,32 +3,8 @@ package br.com.mygoals.base.repository.api.mappers
 import br.com.mygoals.base.repository.api.models.GoalApiModel
 import br.com.mygoals.base.repository.models.Goal
 
-class GoalMapper {
-
-    fun toDomainModel(goalApiModel: GoalApiModel): Goal {
-        return Goal(
-            id,
-            name,
-            goalImageURL,
-            currentBalance,
-            targetAmount,
-            null
-        )
-    }
-
-    fun fromDomainModel(goal: Goal): GoalApiModel {
-        return GoalApiModel(
-            goal.id,
-            goal.name,
-            goal.goalImageURL,
-            goal.currentBalance,
-            goal.targetAmount
-        )
-    }
-
-}
-
-fun GoalApiModel.toDomainModel(): Goal {
+fun GoalApiModel?.toDomainModel(): Goal? {
+    if (this == null) return null
     return Goal(
         id,
         name,
@@ -39,7 +15,8 @@ fun GoalApiModel.toDomainModel(): Goal {
     )
 }
 
-fun Goal.toApiModel(): GoalApiModel {
+fun Goal?.toApiModel(): GoalApiModel? {
+    if (this == null) return null
     return GoalApiModel(
         id,
         name,

@@ -1,8 +1,5 @@
-package br.com.mygoals.base.api.models
-
-import com.squareup.moshi.Json
+package br.com.mygoals.base.repository.models
 
 data class SavingsGoals(
-    @field:Json(name = "savingsGoals")
     val savingsGoals: List<Goal>?
 )

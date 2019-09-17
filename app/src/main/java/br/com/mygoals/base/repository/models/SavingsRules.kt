@@ -1,4 +1,4 @@
-package br.com.mygoals.base.api.models
+package br.com.mygoals.base.repository.models
 
 import com.squareup.moshi.Json
 

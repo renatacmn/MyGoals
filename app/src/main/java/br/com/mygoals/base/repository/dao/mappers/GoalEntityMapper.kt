@@ -1,26 +1,28 @@
-package br.com.mygoals.base.repository.api.mappers
+package br.com.mygoals.base.repository.dao.mappers
 
-import br.com.mygoals.base.repository.api.models.GoalApiModel
+import br.com.mygoals.base.repository.dao.models.GoalEntity
 import br.com.mygoals.base.repository.models.Goal
 
-
-fun GoalApiModel.toDomainModel(): Goal {
+fun GoalEntity?.toDomainModel(): Goal? {
+    if (this == null) return null
     return Goal(
         id,
         name,
         goalImageURL,
         currentBalance,
         targetAmount,
-        null
+        lastRefresh
     )
 }
 
-fun Goal.toApiModel(): GoalApiModel {
-    return GoalApiModel(
+fun Goal?.toEntity(): GoalEntity? {
+    if (this == null) return null
+    return GoalEntity(
         id,
         name,
         goalImageURL,
         currentBalance,
-        targetAmount
+        targetAmount,
+        lastRefresh
     )
 }
