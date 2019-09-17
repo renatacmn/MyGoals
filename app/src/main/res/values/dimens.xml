@@ -62,7 +62,6 @@
     <dimen name="list_item_feed_vertical_padding">24dp</dimen>
     <dimen name="list_item_feed_small_horizontal_spacing">8dp</dimen>
     <dimen name="list_item_feed_horizontal_spacing">16dp</dimen>
-    <dimen name="list_item_feed_vertical_spacing">8dp</dimen>
     <dimen name="list_item_feed_rule_size">24dp</dimen>
     <dimen name="list_item_feed_date_text_size">12sp</dimen>
 
