@@ -28,11 +28,11 @@ class GoalsListViewModel(
 
     // GoalsRepository overrides
 
-    override fun onSuccess(savingsGoals: SavingsGoals) {
+    override fun onGoalsSuccess(savingsGoals: SavingsGoals) {
         viewState.onSuccess(savingsGoals.savingsGoals ?: emptyList())
     }
 
-    override fun onError(throwable: Throwable) {
+    override fun onGoalsError(throwable: Throwable) {
         viewState.onError(throwable)
     }
 

@@ -26,85 +26,85 @@ class GoalsRepository @Inject constructor(
 
     fun getSavingsGoals(listener: Listener) {
         this.listener = listener
-        loadGoalsFromDbRefreshingIfNecessary()
+        loadFromDbRefreshingIfNecessary()
     }
 
     // Private methods
 
-    private fun loadGoalsFromDbRefreshingIfNecessary() {
+    private fun loadFromDbRefreshingIfNecessary() {
         add(
             goalDao.hasGoals(repositoryUtil.getMaxRefreshTime())
                 .subscribeOn(executors.diskIO())
                 .subscribe(
-                    (this::onCheckIfHasGoalsSuccess),
-                    (this::onCheckIfHasGoalsError)
+                    (this::onCheckIfExistsSuccess),
+                    (this::onCheckIfExistsError)
                 )
         )
     }
 
-    private fun onCheckIfHasGoalsSuccess(goalEntity: GoalEntity?) {
-        val hasGoals = goalEntity != null
-        if (!hasGoals) {
-            loadGoalsFromApi()
+    private fun onCheckIfExistsSuccess(goalEntity: GoalEntity?) {
+        val exists = goalEntity != null
+        if (!exists) {
+            loadFromApi()
         } else {
-            loadGoalsFromDb()
+            loadFromDb()
         }
     }
 
-    private fun onCheckIfHasGoalsError(error: Throwable) {
+    private fun onCheckIfExistsError(error: Throwable) {
         error.printStackTrace()
-        loadGoalsFromApi()
+        loadFromApi()
     }
 
-    private fun loadGoalsFromApi() {
+    private fun loadFromApi() {
         add(
             api.getSavingsGoals()
                 .subscribeOn(executors.networkIO())
                 .observeOn(executors.diskIO())
                 .subscribe(
-                    (this::onLoadGoalsFromApiSuccess),
-                    (this::onLoadGoalsFromApiError)
+                    (this::onLoadFromApiSuccess),
+                    (this::onLoadFromApiError)
                 )
         )
     }
 
-    private fun onLoadGoalsFromApiSuccess(data: SavingsGoalsApiModel) {
+    private fun onLoadFromApiSuccess(data: SavingsGoalsApiModel) {
         data.toDomainModel()?.savingsGoals?.let { goals ->
             goals.map { it.lastRefresh = Date() }
             goalDao.saveGoals(goals.mapNotNull { it.toEntity() })
         }
-        loadGoalsFromDb()
+        loadFromDb()
     }
 
-    private fun onLoadGoalsFromApiError(error: Throwable) {
+    private fun onLoadFromApiError(error: Throwable) {
         error.printStackTrace()
-        listener.onError(error)
+        listener.onGoalsError(error)
     }
 
-    private fun loadGoalsFromDb() {
+    private fun loadFromDb() {
         add(
             goalDao.loadGoals()
                 .subscribeOn(executors.diskIO())
                 .observeOn(executors.mainThread())
                 .subscribe(
-                    (this::onLoadGoalsFromDbSuccess),
-                    (this::onLoadGoalsFromDbError)
+                    (this::onLoadFromDbSuccess),
+                    (this::onLoadFromDbError)
                 )
         )
     }
 
-    private fun onLoadGoalsFromDbSuccess(goals: List<GoalEntity>) {
+    private fun onLoadFromDbSuccess(goals: List<GoalEntity>) {
         val savingsGoals = SavingsGoals(goals.mapNotNull { it.toDomainModel() })
-        listener.onSuccess(savingsGoals)
+        listener.onGoalsSuccess(savingsGoals)
     }
 
-    private fun onLoadGoalsFromDbError(error: Throwable) {
-        listener.onError(error)
+    private fun onLoadFromDbError(error: Throwable) {
+        listener.onGoalsError(error)
     }
 
     interface Listener {
-        fun onSuccess(savingsGoals: SavingsGoals)
-        fun onError(throwable: Throwable)
+        fun onGoalsSuccess(savingsGoals: SavingsGoals)
+        fun onGoalsError(throwable: Throwable)
     }
 
 }

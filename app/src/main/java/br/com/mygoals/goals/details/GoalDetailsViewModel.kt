@@ -26,7 +26,7 @@ class GoalDetailsViewModel(
     private val rulesRepository: RulesRepository,
     private val feedRepository: FeedRepository,
     private val executors: Executors
-) : AutoDisposableViewModel() {
+) : AutoDisposableViewModel(), FeedRepository.Listener {
 
     val rulesViewState = GoalDetailsRulesViewState()
     val feedViewState = GoalDetailsFeedViewState()
@@ -48,23 +48,33 @@ class GoalDetailsViewModel(
     }
 
     fun getFeed() {
-        goal?.let { goal ->
-            add(feedRepository.getFeed(goal.id)
-                .subscribeOn(executors.networkIO())
-                .doOnSubscribe { feedViewState.onLoading() }
-                .observeOn(executors.mainThread())
-                .subscribe(this::onFeedSuccess) { error ->
-                    feedViewState.onError(error)
-                })
+        goal?.id?.let { goalId ->
+            feedViewState.onLoading()
+            feedRepository.getFeed(this, goalId)
         }
     }
+
+    // FeedRepository.Listener overrides
+
+    override fun onFeedSuccess(feed: Feed) {
+        feedViewState.onSuccess(feed.feed ?: emptyList())
+    }
+
+    override fun onFeedError(throwable: Throwable) {
+        feedViewState.onError(throwable)
+    }
+
+    // RulesRepository.Listener overrides
 
     private fun onRulesSuccess(data: SavingsRules) {
         rulesViewState.onSuccess(data.savingsRules ?: emptyList())
     }
 
-    private fun onFeedSuccess(data: Feed) {
-        feedViewState.onSuccess(data.feed ?: emptyList())
+    // ViewModel overrides
+
+    override fun onCleared() {
+        super.onCleared()
+        feedRepository.dispose()
     }
 
 }
