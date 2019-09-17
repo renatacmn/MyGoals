@@ -19,7 +19,6 @@ fun GoalApiModel?.toDomainModel(): Goal? {
         name,
         goalImageURL,
         currentBalance,
-        targetAmount,
-        null
+        targetAmount
     )
 }

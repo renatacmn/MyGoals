@@ -11,7 +11,7 @@ data class FeedItem(
 ) {
 
     fun getRule(): Rule {
-        return Rule(savingsRuleId, null, null)
+        return Rule(savingsRuleId, null)
     }
 
 }

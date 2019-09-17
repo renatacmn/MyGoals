@@ -7,43 +7,34 @@ import br.com.mygoals.base.repository.dao.GoalDao
 import br.com.mygoals.base.repository.dao.mappers.toDomainModel
 import br.com.mygoals.base.repository.dao.mappers.toEntity
 import br.com.mygoals.base.repository.models.SavingsGoals
-import br.com.mygoals.base.repository.util.RepositoryUtil
 import io.reactivex.Single
 import java.util.Date
 import javax.inject.Inject
 
 class GoalsRepository @Inject constructor(
     private val api: MyGoalsApi,
-    private val goalDao: GoalDao,
-    private val repositoryUtil: RepositoryUtil
+    private val goalDao: GoalDao
 ) : BaseRepository() {
 
     fun getSavingsGoals() = loadFromDbRefreshingIfNecessary()
 
-    // Private methods
-
     private fun loadFromDbRefreshingIfNecessary(): Single<SavingsGoals> {
-        return goalDao.hasGoals(repositoryUtil.getMaxRefreshTime())
+        return goalDao.hasGoals(getMaxRefreshTime())
             .flatMap {
-                // Has goals on DB
+                // Exists on DB
                 goalDao.loadGoals()
-                    .map { goalEntities ->
-                        SavingsGoals(goalEntities.mapNotNull { it.toDomainModel() })
-                    }
+                    .map { SavingsGoals(it.toDomainModel()) }
             }
             .onErrorResumeNext {
-                // Doesn't have goals on DB or couldn't load
+                // Doesn't exist on DB or couldn't be loaded
                 api.getSavingsGoals()
                     .map { it.toDomainModel() }
                     .flatMap { savingsGoals ->
                         savingsGoals.savingsGoals?.let { goalsList ->
-                            goalsList.map { it.lastRefresh = Date() }
-                            goalDao.saveGoals(goalsList.toEntity())
+                            goalDao.saveGoals(goalsList.toEntity(Date()))
                         }
                         goalDao.loadGoals()
-                            .map { goalEntities ->
-                                SavingsGoals(goalEntities.mapNotNull { it.toDomainModel() })
-                            }
+                            .map { SavingsGoals(it.toDomainModel()) }
                     }
             }
     }

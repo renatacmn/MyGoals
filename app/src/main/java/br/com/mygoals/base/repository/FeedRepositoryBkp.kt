@@ -3,28 +3,32 @@ package br.com.mygoals.base.repository
 import br.com.mygoals.base.BaseRepository
 import br.com.mygoals.base.repository.api.MyGoalsApi
 import br.com.mygoals.base.repository.api.mappers.toDomainModel
-import br.com.mygoals.base.repository.api.models.SavingsGoalsApiModel
-import br.com.mygoals.base.repository.dao.GoalDao
+import br.com.mygoals.base.repository.api.models.FeedApiModel
+import br.com.mygoals.base.repository.dao.FeedItemDao
 import br.com.mygoals.base.repository.dao.mappers.toDomainModel
 import br.com.mygoals.base.repository.dao.mappers.toEntity
-import br.com.mygoals.base.repository.dao.models.GoalEntity
-import br.com.mygoals.base.repository.models.SavingsGoals
+import br.com.mygoals.base.repository.dao.models.FeedItemEntity
+import br.com.mygoals.base.repository.models.Feed
 import br.com.mygoals.util.executors.Executors
 import timber.log.Timber
 import java.util.Date
 import javax.inject.Inject
 
-class GoalsRepositoryBkp @Inject constructor(
+class FeedRepositoryBkp @Inject constructor(
     private val api: MyGoalsApi,
-    private val goalDao: GoalDao,
+    private val feedItemDao: FeedItemDao,
     private val executors: Executors
 ) : BaseRepository() {
 
     private lateinit var listener: Listener
+    private var goalId: Int = -1
 
-    fun getSavingsGoals(listener: Listener) {
+    fun getFeed(listener: Listener, id: Int) {
         this.listener = listener
-        loadFromDbRefreshingIfNecessary()
+        this.goalId = id
+        if (goalId != -1) {
+            loadFromDbRefreshingIfNecessary()
+        }
     }
 
     // Private methods
@@ -32,7 +36,7 @@ class GoalsRepositoryBkp @Inject constructor(
     private fun loadFromDbRefreshingIfNecessary() {
         Timber.d("Check if exists")
         add(
-            goalDao.hasGoals(getMaxRefreshTime())
+            feedItemDao.hasFeedItems(goalId, getMaxRefreshTime())
                 .subscribeOn(executors.diskIO())
                 .subscribe(
                     (this::onCheckIfExistsSuccess),
@@ -41,8 +45,8 @@ class GoalsRepositoryBkp @Inject constructor(
         )
     }
 
-    private fun onCheckIfExistsSuccess(goalEntity: GoalEntity?) {
-        val exists = goalEntity != null
+    private fun onCheckIfExistsSuccess(feedItemEntity: FeedItemEntity?) {
+        val exists = feedItemEntity != null
         if (!exists) {
             Timber.d("> Doesn't exist. Will load from API")
             loadFromApi()
@@ -61,7 +65,7 @@ class GoalsRepositoryBkp @Inject constructor(
     private fun loadFromApi() {
         Timber.d("Load from API")
         add(
-            api.getSavingsGoals()
+            api.getFeed(goalId)
                 .subscribeOn(executors.networkIO())
                 .observeOn(executors.diskIO())
                 .subscribe(
@@ -71,24 +75,26 @@ class GoalsRepositoryBkp @Inject constructor(
         )
     }
 
-    private fun onLoadFromApiSuccess(data: SavingsGoalsApiModel) {
+    private fun onLoadFromApiSuccess(data: FeedApiModel) {
         Timber.d("> Loaded successfully from API. Will save on DB")
-        data.toDomainModel()?.savingsGoals?.let { goals ->
-            goalDao.saveGoals(goals.mapNotNull { it.toEntity(Date()) })
+        data.toDomainModel()?.feed?.let { feedItems ->
+            feedItemDao.saveFeedItems(goalId, feedItems.mapNotNull {
+                it.toEntity(Date(), goalId)
+            })
         }
         loadFromDb()
     }
 
     private fun onLoadFromApiError(error: Throwable) {
-        Timber.d("> Error loading from API. Will show error state")
+        Timber.d("> Error loading from API. Will show error state\n>>${error.message}")
         error.printStackTrace()
-        listener.onGoalsError(error)
+        listener.onFeedError(error)
     }
 
     private fun loadFromDb() {
         Timber.d("Load from DB")
         add(
-            goalDao.loadGoals()
+            feedItemDao.loadFeedItems(goalId)
                 .subscribeOn(executors.diskIO())
                 .observeOn(executors.mainThread())
                 .subscribe(
@@ -98,20 +104,20 @@ class GoalsRepositoryBkp @Inject constructor(
         )
     }
 
-    private fun onLoadFromDbSuccess(goals: List<GoalEntity>) {
+    private fun onLoadFromDbSuccess(feedItems: List<FeedItemEntity>) {
         Timber.d("> Loaded successfully from DB. Will send to view")
-        val savingsGoals = SavingsGoals(goals.mapNotNull { it.toDomainModel() })
-        listener.onGoalsSuccess(savingsGoals)
+        val feed = Feed(feedItems.mapNotNull { it.toDomainModel() })
+        listener.onFeedSuccess(feed)
     }
 
     private fun onLoadFromDbError(error: Throwable) {
         Timber.d("> Error loading from DB. Will show error state\n>>${error.message}")
-        listener.onGoalsError(error)
+        listener.onFeedError(error)
     }
 
     interface Listener {
-        fun onGoalsSuccess(savingsGoals: SavingsGoals)
-        fun onGoalsError(throwable: Throwable)
+        fun onFeedSuccess(feed: Feed)
+        fun onFeedError(throwable: Throwable)
     }
 
 }

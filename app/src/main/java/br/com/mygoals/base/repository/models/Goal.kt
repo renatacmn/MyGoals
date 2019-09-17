@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Parcelable
 import br.com.mygoals.R
 import kotlinx.android.parcel.Parcelize
-import java.util.Date
 
 @Parcelize
 data class Goal(
@@ -12,8 +11,7 @@ data class Goal(
     val name: String,
     val goalImageURL: String,
     val currentBalance: Float,
-    val targetAmount: Float?,
-    var lastRefresh: Date?
+    val targetAmount: Float?
 ) : Parcelable {
 
     fun getValueText(context: Context): String {

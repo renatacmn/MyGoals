@@ -27,3 +27,13 @@ fun FeedItem?.toEntity(lastRefresh: Date?, goalId: Int?): FeedItemEntity? {
         goalId
     )
 }
+
+fun List<FeedItemEntity>?.toDomainModel(): List<FeedItem> {
+    if (this == null) return emptyList()
+    return mapNotNull { it.toDomainModel() }
+}
+
+fun List<FeedItem>?.toEntity(lastRefresh: Date?, goalId: Int?): List<FeedItemEntity> {
+    if (this == null) return emptyList()
+    return mapNotNull { it.toEntity(lastRefresh, goalId) }
+}

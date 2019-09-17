@@ -2,27 +2,31 @@ package br.com.mygoals.goals.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import br.com.mygoals.base.AutoDisposableViewModel
 import br.com.mygoals.base.repository.FeedRepository
 import br.com.mygoals.base.repository.RulesRepository
 import br.com.mygoals.base.repository.models.Feed
 import br.com.mygoals.base.repository.models.Goal
 import br.com.mygoals.base.repository.models.SavingsRules
+import br.com.mygoals.util.executors.Executors
 import javax.inject.Inject
 
 class GoalDetailsViewModelFactory @Inject constructor(
     private val rulesRepository: RulesRepository,
-    private val feedRepository: FeedRepository
+    private val feedRepository: FeedRepository,
+    private val executors: Executors
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return GoalDetailsViewModel(rulesRepository, feedRepository) as T
+        return GoalDetailsViewModel(rulesRepository, feedRepository, executors) as T
     }
 }
 
 class GoalDetailsViewModel(
     private val rulesRepository: RulesRepository,
-    private val feedRepository: FeedRepository
-) : ViewModel(), FeedRepository.Listener, RulesRepository.Listener {
+    private val feedRepository: FeedRepository,
+    private val executors: Executors
+) : AutoDisposableViewModel() {
 
     val rulesViewState = GoalDetailsRulesViewState()
     val feedViewState = GoalDetailsFeedViewState()
@@ -34,43 +38,33 @@ class GoalDetailsViewModel(
     }
 
     fun getRules() {
-        rulesViewState.onLoading()
-        rulesRepository.getSavingsRules(this)
+        add(rulesRepository.getSavingsRules()
+            .subscribeOn(executors.networkIO())
+            .doOnSubscribe { rulesViewState.onLoading() }
+            .observeOn(executors.mainThread())
+            .subscribe(this::onRulesSuccess) { error ->
+                rulesViewState.onError(error)
+            })
     }
 
     fun getFeed() {
         goal?.id?.let { goalId ->
-            feedViewState.onLoading()
-            feedRepository.getFeed(this, goalId)
+            add(feedRepository.getFeed(goalId)
+                .subscribeOn(executors.networkIO())
+                .doOnSubscribe { feedViewState.onLoading() }
+                .observeOn(executors.mainThread())
+                .subscribe(this::onFeedSuccess) { error ->
+                    feedViewState.onError(error)
+                })
         }
     }
 
-    // FeedRepository.Listener overrides
-
-    override fun onFeedSuccess(feed: Feed) {
-        feedViewState.onSuccess(feed.feed ?: emptyList())
+    private fun onRulesSuccess(data: SavingsRules) {
+        rulesViewState.onSuccess(data.savingsRules ?: emptyList())
     }
 
-    override fun onFeedError(throwable: Throwable) {
-        feedViewState.onError(throwable)
-    }
-
-    // RulesRepository.Listener overrides
-
-    override fun onRulesSuccess(savingsRules: SavingsRules) {
-        rulesViewState.onSuccess(savingsRules.savingsRules ?: emptyList())
-    }
-
-    override fun onRulesError(throwable: Throwable) {
-        rulesViewState.onError(throwable)
-    }
-
-    // ViewModel overrides
-
-    override fun onCleared() {
-        super.onCleared()
-        feedRepository.dispose()
-        rulesRepository.dispose()
+    private fun onFeedSuccess(data: Feed) {
+        feedViewState.onSuccess(data.feed ?: emptyList())
     }
 
 }
