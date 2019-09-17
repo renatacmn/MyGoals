@@ -2,8 +2,8 @@ package br.com.mygoals.base.repository
 
 import br.com.mygoals.base.repository.api.MyGoalsApi
 import br.com.mygoals.base.repository.dao.RuleDao
-import br.com.mygoals.testUtil.BaseRepositoryTest
-import br.com.mygoals.testUtil.RulesRepositoryTestDataUtil
+import br.com.mygoals.testUtil.BaseUnitTest
+import br.com.mygoals.testUtil.RulesTestDataUtil
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyZeroInteractions
@@ -14,7 +14,7 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
-class RulesRepositoryTest : BaseRepositoryTest() {
+class RulesUnitTest : BaseUnitTest() {
 
     @Mock
     private lateinit var api: MyGoalsApi
@@ -24,7 +24,7 @@ class RulesRepositoryTest : BaseRepositoryTest() {
 
     private lateinit var rulesRepository: RulesRepository
 
-    private val testDataUtil = RulesRepositoryTestDataUtil()
+    private val testDataUtil = RulesTestDataUtil()
 
     @Before
     fun setUp() {

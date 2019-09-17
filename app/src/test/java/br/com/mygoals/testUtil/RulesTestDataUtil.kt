@@ -7,7 +7,7 @@ import br.com.mygoals.base.repository.dao.mappers.toEntity
 import br.com.mygoals.base.repository.dao.models.RuleEntity
 import br.com.mygoals.base.repository.models.Rule
 
-class RulesRepositoryTestDataUtil {
+class RulesTestDataUtil {
 
     fun savingsRulesApiModel(): SavingsRulesApiModel {
         return SavingsRulesApiModel(ruleApiModelList())

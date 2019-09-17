@@ -90,4 +90,6 @@ dependencies {
 
     androidTestImplementation "androidx.test:runner:$project.testRunnerVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$project.espressoCoreVersion"
+    androidTestImplementation "androidx.test:core:$project.testCoreVersion"
+    androidTestImplementation "androidx.test.ext:junit:$project.androidxJUnitVersion"
 }

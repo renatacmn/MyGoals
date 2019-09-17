@@ -8,7 +8,7 @@ import br.com.mygoals.base.repository.dao.models.GoalEntity
 import br.com.mygoals.base.repository.models.Goal
 import br.com.mygoals.base.repository.models.SavingsGoals
 
-class GoalsRepositoryTestDataUtil {
+class GoalsTestDataUtil {
 
     fun savingsGoalsApiModel(): SavingsGoalsApiModel {
         return SavingsGoalsApiModel(goalApiModelList())

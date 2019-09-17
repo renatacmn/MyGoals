@@ -5,11 +5,10 @@ import br.com.mygoals.base.repository.api.models.FeedApiModel
 import br.com.mygoals.base.repository.api.models.FeedItemApiModel
 import br.com.mygoals.base.repository.dao.mappers.toEntity
 import br.com.mygoals.base.repository.dao.models.FeedItemEntity
-import br.com.mygoals.base.repository.models.Feed
 import br.com.mygoals.base.repository.models.FeedItem
 import java.util.Date
 
-class FeedRepositoryTestDataUtil {
+class FeedTestDataUtil {
 
     fun goalId() = 1
 
@@ -19,6 +18,10 @@ class FeedRepositoryTestDataUtil {
 
     fun feedItemEntity(id: Int = 1): FeedItemEntity? {
         return feedItem(id).toEntity(null, id)
+    }
+
+    fun feedItem(id: Int): FeedItem? {
+        return feedItemApiModel(id).toDomainModel()
     }
 
     // Private methods
@@ -35,10 +38,6 @@ class FeedRepositoryTestDataUtil {
             id.toFloat(),
             id
         )
-    }
-
-    private fun feedItem(id: Int): FeedItem? {
-        return feedItemApiModel(id).toDomainModel()
     }
 
 }

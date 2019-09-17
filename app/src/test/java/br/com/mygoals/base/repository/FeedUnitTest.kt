@@ -2,8 +2,8 @@ package br.com.mygoals.base.repository
 
 import br.com.mygoals.base.repository.api.MyGoalsApi
 import br.com.mygoals.base.repository.dao.FeedItemDao
-import br.com.mygoals.testUtil.BaseRepositoryTest
-import br.com.mygoals.testUtil.FeedRepositoryTestDataUtil
+import br.com.mygoals.testUtil.BaseUnitTest
+import br.com.mygoals.testUtil.FeedTestDataUtil
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyZeroInteractions
@@ -15,7 +15,7 @@ import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
-class FeedRepositoryTest : BaseRepositoryTest() {
+class FeedUnitTest : BaseUnitTest() {
 
     @Mock
     private lateinit var api: MyGoalsApi
@@ -25,7 +25,7 @@ class FeedRepositoryTest : BaseRepositoryTest() {
 
     private lateinit var feedRepository: FeedRepository
 
-    private val testDataUtil = FeedRepositoryTestDataUtil()
+    private val testDataUtil = FeedTestDataUtil()
 
     @Before
     fun setUp() {

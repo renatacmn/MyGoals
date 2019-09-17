@@ -2,7 +2,7 @@ package br.com.mygoals.testUtil
 
 import org.mockito.Mockito
 
-abstract class BaseRepositoryTest {
+abstract class BaseUnitTest {
 
     protected fun <T> any(): T {
         Mockito.any<T>()

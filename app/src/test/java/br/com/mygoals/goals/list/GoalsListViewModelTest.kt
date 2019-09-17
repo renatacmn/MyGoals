@@ -2,7 +2,7 @@ package br.com.mygoals.goals.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import br.com.mygoals.base.repository.GoalsRepository
-import br.com.mygoals.testUtil.GoalsRepositoryTestDataUtil
+import br.com.mygoals.testUtil.GoalsTestDataUtil
 import br.com.mygoals.testUtil.TestExecutors
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
@@ -25,7 +25,7 @@ class GoalsListViewModelTest {
 
     private lateinit var viewModel: GoalsListViewModel
 
-    private val testDataUtil = GoalsRepositoryTestDataUtil()
+    private val testDataUtil = GoalsTestDataUtil()
 
     @Before
     fun setUp() {
