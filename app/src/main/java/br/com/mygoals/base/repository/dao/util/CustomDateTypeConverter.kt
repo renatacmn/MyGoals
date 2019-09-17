@@ -1,4 +1,4 @@
-package br.com.mygoals.base.repository.dao
+package br.com.mygoals.base.repository.dao.util
 
 import androidx.room.TypeConverter
 import java.util.Date

@@ -16,6 +16,7 @@ fun RuleApiModel?.toDomainModel(): Rule? {
     if (this == null) return null
     return Rule(
         id,
-        type
+        type,
+        null
     )
 }

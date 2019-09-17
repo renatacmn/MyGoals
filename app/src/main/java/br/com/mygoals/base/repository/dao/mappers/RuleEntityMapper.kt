@@ -7,7 +7,8 @@ fun RuleEntity?.toDomainModel(): Rule? {
     if (this == null) return null
     return Rule(
         id,
-        type
+        type,
+        lastRefresh
     )
 }
 
@@ -15,6 +16,7 @@ fun Rule?.toEntity(): RuleEntity? {
     if (this == null) return null
     return RuleEntity(
         id,
-        type
+        type,
+        lastRefresh
     )
 }

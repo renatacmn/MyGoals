@@ -10,7 +10,8 @@ fun FeedItemEntity?.toDomainModel(): FeedItem? {
         timestamp,
         message,
         amount,
-        savingsRuleId
+        savingsRuleId,
+        lastRefresh
     )
 }
 
@@ -21,6 +22,7 @@ fun FeedItem?.toEntity(): FeedItemEntity? {
         timestamp,
         message,
         amount,
-        savingsRuleId
+        savingsRuleId,
+        lastRefresh
     )
 }

@@ -1,27 +1,18 @@
 package br.com.mygoals.base.repository.models
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.squareup.moshi.Json
-import java.util.*
+import java.util.Date
 
-@Entity
 data class FeedItem(
-    @PrimaryKey
-    @field:Json(name = "id")
     val id: String,
-    @field:Json(name = "timestamp")
     val timestamp: Date,
-    @field:Json(name = "message")
     val message: String,
-    @field:Json(name = "amount")
     val amount: Float,
-    @field:Json(name = "savingsRuleId")
-    val savingsRuleId: Int
+    val savingsRuleId: Int,
+    var lastRefresh: Date?
 ) {
 
     fun getRule(): Rule {
-        return Rule(savingsRuleId, null)
+        return Rule(savingsRuleId, null, null)
     }
 
 }

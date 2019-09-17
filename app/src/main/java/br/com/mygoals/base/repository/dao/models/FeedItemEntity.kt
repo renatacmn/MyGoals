@@ -11,5 +11,6 @@ data class FeedItemEntity(
     val timestamp: Date,
     val message: String,
     val amount: Float,
-    val savingsRuleId: Int
+    val savingsRuleId: Int,
+    var lastRefresh: Date?
 )
