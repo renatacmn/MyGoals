@@ -1,8 +1,8 @@
 package br.com.mygoals.base.injection.modules
 
 import br.com.mygoals.BuildConfig
-import br.com.mygoals.base.api.MyGoalsApi
-import br.com.mygoals.util.CustomDateAdapter
+import br.com.mygoals.base.repository.api.MyGoalsApi
+import br.com.mygoals.base.repository.api.CustomDateAdapter
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides

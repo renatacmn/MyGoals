@@ -1,8 +1,8 @@
-package br.com.mygoals.base.api
+package br.com.mygoals.base.repository
 
-import br.com.mygoals.base.api.models.Feed
-import br.com.mygoals.base.api.models.SavingsGoals
-import br.com.mygoals.base.api.models.SavingsRules
+import br.com.mygoals.base.repository.models.Feed
+import br.com.mygoals.base.repository.models.SavingsGoals
+import br.com.mygoals.base.repository.models.SavingsRules
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path

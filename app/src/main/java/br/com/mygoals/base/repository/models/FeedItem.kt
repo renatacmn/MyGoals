@@ -1,9 +1,13 @@
 package br.com.mygoals.base.api.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import java.util.*
 
+@Entity
 data class FeedItem(
+    @PrimaryKey
     @field:Json(name = "id")
     val id: String,
     @field:Json(name = "timestamp")

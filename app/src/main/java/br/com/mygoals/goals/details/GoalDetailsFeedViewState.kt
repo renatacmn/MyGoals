@@ -2,7 +2,7 @@ package br.com.mygoals.goals.details
 
 import androidx.databinding.ObservableField
 import br.com.mygoals.base.BaseViewState
-import br.com.mygoals.base.api.models.FeedItem
+import br.com.mygoals.base.repository.models.FeedItem
 
 data class GoalDetailsFeedViewState(
     var feedList: ObservableField<List<FeedItem>> = ObservableField(emptyList())

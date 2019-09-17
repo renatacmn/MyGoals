@@ -2,7 +2,7 @@ package br.com.mygoals.goals.details
 
 import androidx.recyclerview.widget.DiffUtil
 import br.com.mygoals.R
-import br.com.mygoals.base.api.models.Rule
+import br.com.mygoals.base.repository.models.Rule
 import br.com.mygoals.base.view.DataBindingAdapter
 
 class GoalDetailsRulesAdapter :

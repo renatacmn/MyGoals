@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import br.com.mygoals.R
-import br.com.mygoals.base.api.models.FeedItem
-import br.com.mygoals.base.api.models.Goal
+import br.com.mygoals.base.repository.models.FeedItem
+import br.com.mygoals.base.repository.models.Goal
 import br.com.mygoals.base.view.DataBindingAdapter
 import com.bumptech.glide.Glide
 import retrofit2.HttpException

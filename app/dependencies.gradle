@@ -34,6 +34,9 @@ project.ext {
     rxJavaVersion = "2.2.12"
     rxAndroidVersion = "2.1.1"
 
+    // Room
+    roomVersion = "2.2.0-rc01"
+
     // Glide
     glideVersion = "4.9.0"
 

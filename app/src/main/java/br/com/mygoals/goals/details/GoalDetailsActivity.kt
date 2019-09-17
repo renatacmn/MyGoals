@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import br.com.mygoals.R
 import br.com.mygoals.base.BaseActivity
-import br.com.mygoals.base.api.models.Goal
+import br.com.mygoals.base.repository.models.Goal
 import br.com.mygoals.databinding.ActivityGoalDetailsBinding
 import kotlinx.android.synthetic.main.activity_goal_details.*
 import kotlinx.android.synthetic.main.activity_goal_details_section_header_info.*

@@ -6,7 +6,7 @@
 
         <variable
             name="goal"
-            type="br.com.mygoals.base.api.models.Goal" />
+            type="br.com.mygoals.base.repository.models.Goal" />
 
         <variable
             name="vm"

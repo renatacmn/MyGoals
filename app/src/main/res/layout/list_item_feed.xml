@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="br.com.mygoals.base.api.models.FeedItem" />
+            type="br.com.mygoals.base.repository.models.FeedItem" />
 
     </data>
 

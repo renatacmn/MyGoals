@@ -5,7 +5,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import br.com.mygoals.R
 import br.com.mygoals.base.BaseActivity
-import br.com.mygoals.base.api.models.Goal
+import br.com.mygoals.base.repository.models.Goal
 import br.com.mygoals.databinding.ActivityGoalListBinding
 import br.com.mygoals.goals.details.GoalDetailsActivity
 import javax.inject.Inject

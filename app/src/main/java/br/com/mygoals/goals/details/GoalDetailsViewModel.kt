@@ -3,25 +3,28 @@ package br.com.mygoals.goals.details
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import br.com.mygoals.base.AutoDisposableViewModel
-import br.com.mygoals.base.api.MyGoalsRepository
-import br.com.mygoals.base.api.models.Feed
-import br.com.mygoals.base.api.models.Goal
-import br.com.mygoals.base.api.models.SavingsRules
+import br.com.mygoals.base.repository.FeedRepository
+import br.com.mygoals.base.repository.RulesRepository
+import br.com.mygoals.base.repository.models.Feed
+import br.com.mygoals.base.repository.models.Goal
+import br.com.mygoals.base.repository.models.SavingsRules
 import br.com.mygoals.util.executors.Executors
 import javax.inject.Inject
 
 class GoalDetailsViewModelFactory @Inject constructor(
-    private val repository: MyGoalsRepository,
+    private val rulesRepository: RulesRepository,
+    private val feedRepository: FeedRepository,
     private val executors: Executors
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return GoalDetailsViewModel(repository, executors) as T
+        return GoalDetailsViewModel(rulesRepository, feedRepository, executors) as T
     }
 }
 
 class GoalDetailsViewModel(
-    private val repository: MyGoalsRepository,
+    private val rulesRepository: RulesRepository,
+    private val feedRepository: FeedRepository,
     private val executors: Executors
 ) : AutoDisposableViewModel() {
 
@@ -35,7 +38,7 @@ class GoalDetailsViewModel(
     }
 
     fun getRules() {
-        add(repository.getSavingsRules()
+        add(rulesRepository.getSavingsRules()
             .subscribeOn(executors.networkIO())
             .doOnSubscribe { rulesViewState.onLoading() }
             .observeOn(executors.mainThread())
@@ -46,7 +49,7 @@ class GoalDetailsViewModel(
 
     fun getFeed() {
         goal?.let { goal ->
-            add(repository.getFeed(goal.id)
+            add(feedRepository.getFeed(goal.id)
                 .subscribeOn(executors.networkIO())
                 .doOnSubscribe { feedViewState.onLoading() }
                 .observeOn(executors.mainThread())

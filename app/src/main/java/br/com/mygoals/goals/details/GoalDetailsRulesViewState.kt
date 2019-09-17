@@ -2,7 +2,7 @@ package br.com.mygoals.goals.details
 
 import androidx.databinding.ObservableField
 import br.com.mygoals.base.BaseViewState
-import br.com.mygoals.base.api.models.Rule
+import br.com.mygoals.base.repository.models.Rule
 
 data class GoalDetailsRulesViewState(
     var rulesList: ObservableField<List<Rule>> = ObservableField(emptyList())
