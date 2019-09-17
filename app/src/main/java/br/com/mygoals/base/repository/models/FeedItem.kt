@@ -7,8 +7,7 @@ data class FeedItem(
     val timestamp: Date,
     val message: String,
     val amount: Float,
-    val savingsRuleId: Int,
-    var lastRefresh: Date?
+    val savingsRuleId: Int
 ) {
 
     fun getRule(): Rule {

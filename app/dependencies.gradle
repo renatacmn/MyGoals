@@ -40,6 +40,9 @@ project.ext {
     // Glide
     glideVersion = "4.9.0"
 
+    // Timber
+    timberVersion = "4.7.1"
+
     // Test
     jUnitVersion = "4.12"
     testRunnerVersion = "1.2.0"

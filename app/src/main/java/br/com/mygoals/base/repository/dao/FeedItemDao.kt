@@ -11,13 +11,13 @@ import java.util.Date
 @Dao
 interface FeedItemDao {
 
-    @Query("SELECT * FROM feed_item_entity")
-    fun loadFeedItems(): Single<List<FeedItemEntity>>
+    @Query("SELECT * FROM feed_item_entity WHERE goalId = :goalId")
+    fun loadFeedItems(goalId: Int): Single<List<FeedItemEntity>>
 
     @Insert(onConflict = REPLACE)
     fun saveFeedItems(items: List<FeedItemEntity>)
 
-    @Query("SELECT * FROM feed_item_entity WHERE lastRefresh > :lastRefreshMax LIMIT 1")
-    fun hasFeedItems(lastRefreshMax: Date): Single<FeedItemEntity>
+    @Query("SELECT * FROM feed_item_entity WHERE goalId = :goalId AND lastRefresh > :lastRefreshMax LIMIT 1")
+    fun hasFeedItems(goalId: Int, lastRefreshMax: Date): Single<FeedItemEntity>
 
 }

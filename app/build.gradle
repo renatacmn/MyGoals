@@ -69,6 +69,9 @@ dependencies {
     // Glide
     implementation "com.github.bumptech.glide:glide:$project.glideVersion"
 
+    // Timbe
+    implementation "com.jakewharton.timber:timber:$project.timberVersion"
+
     // Annotation processors
     kapt "com.google.dagger:dagger-compiler:$project.daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$project.daggerVersion"

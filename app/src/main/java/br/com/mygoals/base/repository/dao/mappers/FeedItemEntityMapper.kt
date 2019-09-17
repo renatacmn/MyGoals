@@ -2,6 +2,7 @@ package br.com.mygoals.base.repository.dao.mappers
 
 import br.com.mygoals.base.repository.dao.models.FeedItemEntity
 import br.com.mygoals.base.repository.models.FeedItem
+import java.util.Date
 
 fun FeedItemEntity?.toDomainModel(): FeedItem? {
     if (this == null) return null
@@ -10,12 +11,11 @@ fun FeedItemEntity?.toDomainModel(): FeedItem? {
         timestamp,
         message,
         amount,
-        savingsRuleId,
-        lastRefresh
+        savingsRuleId
     )
 }
 
-fun FeedItem?.toEntity(): FeedItemEntity? {
+fun FeedItem?.toEntity(lastRefresh: Date?, goalId: Int?): FeedItemEntity? {
     if (this == null) return null
     return FeedItemEntity(
         id,
@@ -23,6 +23,7 @@ fun FeedItem?.toEntity(): FeedItemEntity? {
         message,
         amount,
         savingsRuleId,
-        lastRefresh
+        lastRefresh,
+        goalId
     )
 }

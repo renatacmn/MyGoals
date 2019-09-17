@@ -11,11 +11,10 @@ import br.com.mygoals.base.repository.dao.models.FeedItemEntity
 import br.com.mygoals.base.repository.models.Feed
 import br.com.mygoals.base.repository.util.RepositoryUtil
 import br.com.mygoals.util.executors.Executors
+import timber.log.Timber
 import java.util.Date
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class FeedRepository @Inject constructor(
     private val api: MyGoalsApi,
     private val feedItemDao: FeedItemDao,
@@ -24,19 +23,22 @@ class FeedRepository @Inject constructor(
 ) : BaseRepository() {
 
     private lateinit var listener: Listener
-    private var goalId: Int? = null
+    private var goalId: Int = -1
 
     fun getFeed(listener: Listener, id: Int) {
         this.listener = listener
         this.goalId = id
-        loadFromDbRefreshingIfNecessary()
+        if (goalId != -1) {
+            loadFromDbRefreshingIfNecessary()
+        }
     }
 
     // Private methods
 
     private fun loadFromDbRefreshingIfNecessary() {
+        Timber.d("Check if exists")
         add(
-            feedItemDao.hasFeedItems(repositoryUtil.getMaxRefreshTime())
+            feedItemDao.hasFeedItems(goalId, repositoryUtil.getMaxRefreshTime())
                 .subscribeOn(executors.diskIO())
                 .subscribe(
                     (this::onCheckIfExistsSuccess),
@@ -48,47 +50,53 @@ class FeedRepository @Inject constructor(
     private fun onCheckIfExistsSuccess(feedItemEntity: FeedItemEntity?) {
         val exists = feedItemEntity != null
         if (!exists) {
+            Timber.d("> Doesn't exist. Will load from API")
             loadFromApi()
         } else {
+            Timber.d("> Exists. Will load from DB")
             loadFromDb()
         }
     }
 
     private fun onCheckIfExistsError(error: Throwable) {
+        Timber.d("> Error while checking if exists. Will load from API\n>>${error.message}")
         error.printStackTrace()
         loadFromApi()
     }
 
     private fun loadFromApi() {
-        goalId?.let { goalId ->
-            add(
-                api.getFeed(goalId)
-                    .subscribeOn(executors.networkIO())
-                    .observeOn(executors.diskIO())
-                    .subscribe(
-                        (this::onLoadFromApiSuccess),
-                        (this::onLoadFromApiError)
-                    )
-            )
-        }
+        Timber.d("Load from API")
+        add(
+            api.getFeed(goalId)
+                .subscribeOn(executors.networkIO())
+                .observeOn(executors.diskIO())
+                .subscribe(
+                    (this::onLoadFromApiSuccess),
+                    (this::onLoadFromApiError)
+                )
+        )
     }
 
     private fun onLoadFromApiSuccess(data: FeedApiModel) {
+        Timber.d("> Loaded successfully from API. Will save on DB")
         data.toDomainModel()?.feed?.let { feedItems ->
-            feedItems.map { it.lastRefresh = Date() }
-            feedItemDao.saveFeedItems(feedItems.mapNotNull { it.toEntity() })
+            feedItemDao.saveFeedItems(feedItems.mapNotNull {
+                it.toEntity(Date(), goalId)
+            })
         }
         loadFromDb()
     }
 
     private fun onLoadFromApiError(error: Throwable) {
+        Timber.d("> Error loading from API. Will show error state\n>>${error.message}")
         error.printStackTrace()
         listener.onFeedError(error)
     }
 
     private fun loadFromDb() {
+        Timber.d("Load from DB")
         add(
-            feedItemDao.loadFeedItems()
+            feedItemDao.loadFeedItems(goalId)
                 .subscribeOn(executors.diskIO())
                 .observeOn(executors.mainThread())
                 .subscribe(
@@ -99,11 +107,13 @@ class FeedRepository @Inject constructor(
     }
 
     private fun onLoadFromDbSuccess(feedItems: List<FeedItemEntity>) {
+        Timber.d("> Loaded successfully from DB. Will send to view")
         val feed = Feed(feedItems.mapNotNull { it.toDomainModel() })
         listener.onFeedSuccess(feed)
     }
 
     private fun onLoadFromDbError(error: Throwable) {
+        Timber.d("> Error loading from DB. Will show error state\n>>${error.message}")
         listener.onFeedError(error)
     }
 

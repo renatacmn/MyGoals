@@ -19,7 +19,6 @@ fun FeedItemApiModel?.toDomainModel(): FeedItem? {
         timestamp,
         message,
         amount,
-        savingsRuleId,
-        null
+        savingsRuleId
     )
 }
