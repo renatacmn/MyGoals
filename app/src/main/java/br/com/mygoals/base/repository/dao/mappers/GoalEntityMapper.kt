@@ -26,3 +26,13 @@ fun Goal?.toEntity(): GoalEntity? {
         lastRefresh
     )
 }
+
+fun List<GoalEntity>?.toDomainModel(): List<Goal> {
+    if (this == null) return emptyList()
+    return mapNotNull { it.toDomainModel() }
+}
+
+fun List<Goal>?.toEntity(): List<GoalEntity> {
+    if (this == null) return emptyList()
+    return mapNotNull { it.toEntity() }
+}

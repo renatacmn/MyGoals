@@ -2,45 +2,45 @@ package br.com.mygoals.goals.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import br.com.mygoals.base.AutoDisposableViewModel
 import br.com.mygoals.base.repository.GoalsRepository
 import br.com.mygoals.base.repository.models.SavingsGoals
+import br.com.mygoals.util.executors.Executors
 import javax.inject.Inject
 
 class GoalsListViewModelFactory @Inject constructor(
-    private val goalsRepository: GoalsRepository
+    private val goalsRepository: GoalsRepository,
+    private val executors: Executors
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return GoalsListViewModel(goalsRepository) as T
+        return GoalsListViewModel(goalsRepository, executors) as T
     }
 }
 
 class GoalsListViewModel(
-    private val goalsRepository: GoalsRepository
-) : ViewModel(), GoalsRepository.Listener {
+    private val goalsRepository: GoalsRepository,
+    private val executors: Executors
+) : AutoDisposableViewModel() {
 
     val viewState = GoalsListViewState()
 
     fun getSavingsGoals() {
-        viewState.onLoading()
-        goalsRepository.getSavingsGoals(this)
+        add(goalsRepository.getSavingsGoals()
+            .subscribeOn(executors.diskIO())
+            .doOnSubscribe { viewState.onLoading() }
+            .observeOn(executors.mainThread())
+            .subscribe(this::onSuccess, this::onError)
+        )
     }
 
-    // GoalsRepository overrides
-
-    override fun onGoalsSuccess(savingsGoals: SavingsGoals) {
-        viewState.onSuccess(savingsGoals.savingsGoals ?: emptyList())
+    private fun onSuccess(data: SavingsGoals) {
+        viewState.onSuccess(data.savingsGoals ?: emptyList())
     }
 
-    override fun onGoalsError(throwable: Throwable) {
-        viewState.onError(throwable)
-    }
-
-    // ViewModel overrides
-
-    override fun onCleared() {
-        super.onCleared()
-        goalsRepository.dispose()
+    private fun onError(error: Throwable) {
+        error.printStackTrace()
+        viewState.onError(error)
     }
 
 }
