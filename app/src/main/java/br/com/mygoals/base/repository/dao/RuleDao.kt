@@ -11,7 +11,7 @@ import java.util.Date
 @Dao
 interface RuleDao {
 
-    @Query("SELECT * FROM goal_entity")
+    @Query("SELECT * FROM rule_entity")
     fun loadRules(): Single<List<RuleEntity>>
 
     @Insert(onConflict = REPLACE)

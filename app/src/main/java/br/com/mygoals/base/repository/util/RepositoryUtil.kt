@@ -1,4 +1,4 @@
-package br.com.mygoals.base.repository
+package br.com.mygoals.base.repository.util
 
 import java.util.Calendar
 import java.util.Date

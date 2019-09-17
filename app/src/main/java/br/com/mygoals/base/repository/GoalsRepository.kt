@@ -9,6 +9,7 @@ import br.com.mygoals.base.repository.dao.mappers.toDomainModel
 import br.com.mygoals.base.repository.dao.mappers.toEntity
 import br.com.mygoals.base.repository.dao.models.GoalEntity
 import br.com.mygoals.base.repository.models.SavingsGoals
+import br.com.mygoals.base.repository.util.RepositoryUtil
 import br.com.mygoals.util.executors.Executors
 import java.util.Date
 import javax.inject.Inject
